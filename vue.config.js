@@ -50,8 +50,8 @@ module.exports = {
 
 	css: {
 		extract: process.env.NODE_ENV === 'production', // 是否使用css分离插件 ExtractTextPlugin
-		sourceMap: false, // 开启 CSS source maps?
-		requireModuleExtension: false, // 启用 CSS modules for all css / pre-processor files.
+		sourceMap: true, // 开启 CSS source maps?
+		requireModuleExtension: true, // 启用 CSS modules for all css / pre-processor files.
 		loaderOptions: {
 			sass: {
 				additionalData: `@import "~assets/css/_var.scss";`

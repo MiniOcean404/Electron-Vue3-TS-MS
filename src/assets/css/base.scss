@@ -14,17 +14,14 @@ body {
   -webkit-tap-highlight-color: transparent; /* webkit是苹果浏览器引擎，tap点击，highlight背景高亮，color颜色，颜色用数值调节 */
   background: $color-background;
   color: $color-text;
-  /* rem vw/vh */
   width: 100vw;
   height: 100vh;
 }
-
 
 a {
   color: $color-text;
   text-decoration: none;
 }
-
 
 .clear-fix::after {
   clear: both;
