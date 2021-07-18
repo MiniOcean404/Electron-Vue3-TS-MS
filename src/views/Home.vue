@@ -1,18 +1,19 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
-  </div>
+	<div id="name"></div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+const { ipcRenderer } = window.require('electron')
+const PATH = window.require('path')
+// 引入对应的声明类型及对应的函数
+import { defineComponent, triggerRef, watchEffect, ref, shallowRef, getCurrentInstance } from 'vue'
 
-@Options({
-  components: {
-    HelloWorld,
-  },
+export default defineComponent({
+	name: 'Home',
+	setup(data, content) {
+		ipcRenderer.send('test', 2)
+	}
 })
-export default class Home extends Vue {}
 </script>
+
+<style lang="scss" scoped></style>
