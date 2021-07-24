@@ -14,38 +14,36 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-const { ipcRenderer, shell, clipboard } = window.require('electron')
-import { getQRCode, checkScan } from '@/api/login.ts'
+const { ipcRenderer, shell, clipboard, net, remote } = window.require('electron')
 
 export default defineComponent({
 	name: 'getCookie',
 	data() {
 		return {
 			cookie: '',
-			QRCodeUrl: 'https://qr.m.jd.com/show?appid=133&size=147'
+			QRCodeUrl: `https://qr.m.jd.com/show?appid=133&size=147&t=${Date.now().toString()}`
 		}
 	},
 	setup() {},
-	created() {
-		this.getCookie()
-		this.getQRImg()
-	},
+	created() {},
 	methods: {
-		async getQRImg() {
-			setInterval(async () => {
-				// await checkScan(this.cookie)
-			}, 2000)
-		},
+		getQRImg() {},
 		getCookie() {
+			this.getQRImg()
+
 			const _this = this
 			ipcRenderer.send('get-cookie')
 			ipcRenderer.on('cookie', function(event, arg) {
 				ipcRenderer.removeAllListeners('cookie')
 				arg.forEach((i: any) => {
 					if (i.name === 'QRCodeKey') {
-						_this.cookie = i.value
+						_this.cookie = `QRCodeKey=${i.value};HttpOnly;`
+					}
+					if (i.name === 'wlfstk_smdl') {
+						_this.cookie += `wlfstk_smdl=${i.value}; PATH=/; DOMAIN=.jd.com`
 					}
 				})
+				console.log('cookie', _this.cookie)
 			})
 		}
 	}

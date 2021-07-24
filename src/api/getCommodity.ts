@@ -12,6 +12,7 @@ export function getDetail(type: string, area: string, skuIds: string) {
 		}
 	})
 }
+
 // 获取商品价格接口
 export function getPrice(pduid: string, skuIds: string) {
 	return request({

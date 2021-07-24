@@ -1,21 +1,20 @@
 <template>
 	<div id="content">
 		<Menu></Menu>
-		<router-view class="main" />
+		<main>
+			<el-page-header @back="goBack" content="登录二维码"></el-page-header>
+			<router-view class="main" />
+		</main>
 	</div>
 </template>
 
-<script lang="ts">
-import Menu from '@/components/menu.vue'
+<script setup lang="ts">
+import { defineEmits } from 'vue'
+import Menu from 'components/Menu.vue'
 
-export default {
-	name: 'Vue',
-	components: {
-		Menu
-	},
-	data() {
-		return {}
-	}
+const emit = defineEmits(['goBack'])
+const goBack = () => {
+	console.log('go back')
 }
 </script>
 
@@ -29,7 +28,7 @@ html,
 }
 #content {
 	display: flex;
-	.main {
+	main {
 		width: 100%;
 	}
 }

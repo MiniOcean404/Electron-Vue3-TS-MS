@@ -1,27 +1,33 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
+const axios = window.require('axios')
+import { AxiosResponse, AxiosRequestConfig } from 'axios'
 
-export async function request(config: object | AxiosRequestConfig) {
-	// 导出封装的方法
-	// 创建axios对象并进行配置
-	const api: AxiosInstance = axios.create({
-		baseURL: '',
-		timeout: 5000,
-		withCredentials: true
-	})
-	// 请求拦截器
-	api.interceptors.request.use(config => {
-		return config
-	})
-	// 响应拦截器
-	api.interceptors.response.use(res => {
-		return res
-	})
+export const UserAgent =
+	'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36'
 
-	const res = await api(config)
-
-	if (res.status === 200) {
-	} else {
+export const request = axios.create({
+	baseURL: '',
+	timeout: 5000,
+	withCredentials: true,
+	headers: {
+		'Content-Type': 'application/json;charset=UTF-8'
 	}
+})
 
-	return res
-}
+// 请求拦截器
+request.interceptors.request.use((config: AxiosRequestConfig) => {
+	return config
+})
+
+// 响应拦截器,响应拦截器中添加响应错误状态码、数据的判断
+request.interceptors.response.use(
+	(res: AxiosResponse) => {
+		if (typeof res.status && res.status >= 200 && res.status < 400) {
+			return res
+		} else {
+			console.log(res, '状态码不在200-400内')
+		}
+	},
+	(err: any) => {
+		console.log(err, '请求出错')
+	}
+)
