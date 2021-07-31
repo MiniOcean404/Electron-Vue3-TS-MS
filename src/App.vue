@@ -2,7 +2,6 @@
 	<div id="content">
 		<Menu></Menu>
 		<main>
-			<el-page-header @back="goBack" content="登录二维码"></el-page-header>
 			<router-view class="main" />
 		</main>
 	</div>

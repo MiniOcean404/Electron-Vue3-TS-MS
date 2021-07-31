@@ -11,7 +11,7 @@
 		</div>
 	</div>
 </template>
-
+  
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 const { ipcRenderer, shell, clipboard, net, remote } = window.require('electron')
@@ -21,7 +21,7 @@ export default defineComponent({
 	data() {
 		return {
 			cookie: '',
-			QRCodeUrl: `https://qr.m.jd.com/show?appid=133&size=147&t=${Date.now().toString()}`
+			QRCodeUrl: `https://qr.m.jd.com/show?appid=133&size=147&t=${Date.now().toString()}`,
 		}
 	},
 	setup() {},
@@ -33,7 +33,7 @@ export default defineComponent({
 
 			const _this = this
 			ipcRenderer.send('get-cookie')
-			ipcRenderer.on('cookie', function(event, arg) {
+			ipcRenderer.on('cookie', function (event, arg) {
 				ipcRenderer.removeAllListeners('cookie')
 				arg.forEach((i: any) => {
 					if (i.name === 'QRCodeKey') {
@@ -45,8 +45,8 @@ export default defineComponent({
 				})
 				console.log('cookie', _this.cookie)
 			})
-		}
-	}
+		},
+	},
 })
 </script>
 

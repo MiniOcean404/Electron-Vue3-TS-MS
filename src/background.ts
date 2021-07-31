@@ -7,11 +7,11 @@ import './mainProcess/appEvent'
 import './mainProcess/ipMainEvent'
 import { regGlobalShortcut, isReg } from './mainProcess/shortcut'
 import { createMenu } from './mainProcess/menu/menu'
-import path from 'path'
 
 protocol.registerSchemesAsPrivileged([{ scheme: 'app', privileges: { secure: true, standard: true } }])
 
 export let win: BrowserWindow
+
 export async function createWindow() {
 	// Create the browser window.
 	win = new BrowserWindow({

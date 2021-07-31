@@ -1,6 +1,8 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import Home from 'views/home/Home.vue'
-const View = () => import(/* webpackChunkName: "about" */ 'views/home/Home.vue')
+
+const Home = () => import(/* webpackChunkName: "Home" */ 'views/home/Home.vue')
+const Task = () => import(/* webpackChunkName: "Task" */ 'views/task/Task.vue')
+const jdTime = () => import(/* webpackChunkName: "jdTime" */ 'views/server-time/server-time.vue')
 
 const routes: Array<RouteRecordRaw> = [
 	{
@@ -9,9 +11,14 @@ const routes: Array<RouteRecordRaw> = [
 		component: Home
 	},
 	{
-		path: '/about',
-		name: 'About',
-		component: View
+		path: '/task',
+		name: 'task',
+		component: Task
+	},
+	{
+		path: '/jdTime',
+		name: 'jdTime',
+		component: jdTime
 	}
 ]
 

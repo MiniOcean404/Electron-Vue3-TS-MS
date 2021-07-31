@@ -1,9 +1,9 @@
 import { createStore, Store } from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
-import modules from './module/index'
 
 import { InjectionKey } from 'vue'
-import { State } from 'types/store/user.d.ts'
+import { State } from 'types/store/module.d.ts'
+import modules from './module/index'
 
 // 定义 injection key
 export const key: InjectionKey<Store<State>> = Symbol()

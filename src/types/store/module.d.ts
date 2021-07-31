@@ -6,10 +6,8 @@ export interface UserInfo {
 	isPlusMember: string
 }
 
-interface Account {
-	[key: string]: unknown
-}
-
 export interface State {
-	account: Account
+	account: object[]
+	shopInfo: object[]
+	taskInfo: object[]
 }

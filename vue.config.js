@@ -13,14 +13,14 @@ module.exports = {
 		// copy:true
 	},
 	publicPath: './',
-	//打包是否生成.map文件
+	// 打包是否生成.map文件
 	productionSourceMap: false,
 
 	configureWebpack: {
 		devtool: 'source-map'
 	},
 
-	chainWebpack: config => {
+	chainWebpack: (config) => {
 		config.resolve.alias
 			.set('@', resolve('src'))
 			.set('api', resolve('src/api'))
@@ -28,6 +28,7 @@ module.exports = {
 			.set('common', resolve('src/common'))
 			.set('views', resolve('src/views'))
 			.set('components', resolve('src/components'))
+			.set('types', resolve('src/types'))
 
 		config.resolve.extensions
 			.add('.js')
@@ -36,7 +37,7 @@ module.exports = {
 			.add('sass')
 
 		if (process.env.NODE_ENV !== 'online') {
-			//打包忽略引入的文件
+			// 打包忽略引入的文件
 			config.set('externals', {
 				// vue: 'Vue',
 				// 'vue-router': 'VueRouter',

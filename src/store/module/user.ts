@@ -1,10 +1,9 @@
-import { UserInfo, State } from 'types/store/user.d.ts'
-import { checkUser } from 'api/user'
+import { UserInfo, State } from 'types/store/module.d.ts'
 
 export default {
 	namespaced: true,
 	state: {
-		account: {}
+		account: []
 	},
 
 	getters: {
@@ -15,17 +14,20 @@ export default {
 
 	mutations: {
 		SAVE_OR_UPDATE(state: State, { pinId, name, cookie, isLogin, isPlusMember }: UserInfo) {
-			state.account = {
+			state.account.push({
 				pinId,
 				name,
 				cookie,
 				isLogin,
 				isPlusMember
-			}
+			})
 		},
 
-		REMOVE(state: State) {
-			state.account = {}
+		REMOVE_All(state: State) {
+			state.account.length = 0
+		},
+		REMOVE_SOME_ONE(state: State, index) {
+			state.account.splice(index, 1)
 		}
 	},
 

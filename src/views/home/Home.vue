@@ -1,69 +1,43 @@
 <template>
-	<Login @AlreadyLogin='alreadyLogin'></Login>
-	<Table @deleteHandle='deleteHandle' :data='tableData'></Table>
+	<component :is="Login" @AlreadyLogin="alreadyLogin"></component>
+	<Table :data="allUser"></Table>
 </template>
 
-<script>
+<script setup lang="ts">
 // 引入对应的声明类型及对应的函数
-import { defineComponent, reactive } from 'vue'
 import Login from 'views/home/child/Login.vue'
 import Table from 'views/home/child/Table.vue'
+import { defineComponent, reactive, ref, computed } from 'vue'
+import { useStore } from 'vuex' // setup专用
 import { checkUser } from 'api/user'
 
+const store = useStore()
 
-export default defineComponent({
-	name: 'Home',
-	components: {
-		Login,
-		Table
-	},
-	created() {
-		this.getInfo()
-	},
-	data() {
-		return {
-			tableData: []
-		}
-	},
-	methods: {
-		getInfo() {
-			checkUser(value).then((res) => {
-				const info = this.$store.getters['user/userInfo']
-				if (info.name) {
-					this.tableData = reactive([info])
-				}
-			}).catch(e => {
-				console.log(e)
-				this.$store.commit('user/REMOVE')
-			})
-		},
+// const tableData: Ref<object[]> = ref([])
+const Cookie = ref('')
 
-		alreadyLogin(cookie) {
-			const pinId = cookie.match(/pinId=(.*?);/)[1]
-			const nameEncode = cookie.match(/unick=(.*?);/)[1]
-			let name
-			if (nameEncode !== undefined) {
-				name = window.decodeURIComponent(nameEncode)
-			}
+const allUser = computed(() => store.getters['user/userInfo'])
 
-			checkUser(cookie).then((res) => {
-				const info = {
-					pinId,
-					cookie,
-					name,
-					isLogin: '是',
-					isPlusMember: res.data === true ? '是' : '否'
-				}
-				this.tableData = reactive([info])
-				this.$store.dispatch('user/saveAccount', info)
-			})
-		},
-
-		deleteHandle() {
-			this.tableData = reactive([])
-		}
+function alreadyLogin(cookie: string) {
+	Cookie.value = cookie
+	const pinId = cookie.match(/pinId=(.*?);/)?.[1]
+	const nameEncode = cookie.match(/unick=(.*?);/)?.[1]
+	let name: string
+	if (nameEncode !== undefined) {
+		name = window.decodeURIComponent(nameEncode)
 	}
-})
+
+	checkUser(cookie).then((res: any) => {
+		const info = {
+			pinId,
+			cookie,
+			name,
+			isLogin: '是',
+			isPlusMember: res.data === true ? '是' : '否'
+		}
+		store.dispatch('user/saveAccount', info)
+	})
+}
 </script>
 
-<style lang='scss' scoped></style>
+<style lang="scss" scoped></style>
