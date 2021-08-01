@@ -4,10 +4,10 @@ import { ContentType, request, UserAgent } from 'api/request'
 export function getBuyInfo(Cookie: string, shopId: string, buyNumber: number) {
 	return request({
 		url: `https://marathon.jd.com/seckillnew/orderService/pc/init.action`,
-		methods: 'GET',
+		method: 'GET',
 		headers: {
 			Cookie,
-			'User-Agent': UserAgent,
+			'User-Agent': UserAgent
 		},
 		data: {
 			sku: shopId,
@@ -21,7 +21,7 @@ async function orderSubmit(Cookie: string) {
 	// 请求结算页面
 	await request({
 		url: `https://trade.jd.com/shopping/order/getOrderInfo.action`,
-		methods: 'GET',
+		method: 'GET',
 		headers: {
 			Cookie,
 			'User-Agent': UserAgent,
@@ -32,7 +32,7 @@ async function orderSubmit(Cookie: string) {
 	// 提交订单
 	return request({
 		url: `https://trade.jd.com/shopping/order/submitOrder.action`,
-		methods: 'POST',
+		method: 'POST',
 		data: {
 			overseaPurchaseCookies: '',
 			vendorRemarks: '[]',
@@ -58,7 +58,7 @@ async function orderSubmit(Cookie: string) {
 //   const { cat, venderId } = await getItemInfo(skuId)
 //   const area = `${buyInfo['addressList'][0]['provinceId']}_${buyInfo['addressList'][0]['cityId']}_${buyInfo['addressList'][0]['countyId']}_${buyInfo['addressList'][0]['townId']}`
 //   return request({
-//     uri: URLS.GET_ITEM_STOCK,
+//     uri: 'https://c0.3.cn/stock',
 //     qs: {
 //       skuId,
 //       buyNum,

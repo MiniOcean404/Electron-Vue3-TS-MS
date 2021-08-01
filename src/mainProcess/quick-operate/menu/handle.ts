@@ -1,15 +1,15 @@
 import { session } from 'electron'
-import { win } from '../../background'
+import { win } from '../../load/main-config'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 
 export const getCookie = function() {
 	session.defaultSession.cookies
 		.get({ url: 'http://www.jd.com' })
-		.then(cookies => {
+		.then((cookies) => {
 			// BrowerWindow.webContents.send('cookie', cookies)
 			console.log(cookies)
 		})
-		.catch(error => {
+		.catch((error) => {
 			console.log(error)
 		})
 }

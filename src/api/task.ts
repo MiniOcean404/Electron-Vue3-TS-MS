@@ -5,11 +5,12 @@ import { ElMessageBox } from 'element-plus'
 export function getItemInfo(skuId: string) {
 	return request({
 		url: `https://item.jd.com/${skuId}.html`,
-		methods: 'GET',
+		method: 'GET',
 		headers: {
 			'User-Agent': UserAgent,
 			'Content-Type': 'application/json;charset=UTF-8'
 		},
+		responseType: 'text', //document直接返回DOM不用DOMParser解析
 		// 请求后的数据处理
 		transformResponse: [
 			function(data: any) {
@@ -37,7 +38,7 @@ export function getItemInfo(skuId: string) {
 						name,
 						imageSrc,
 						cat,
-						venderId,
+						venderId, //店铺ID
 						easyBuyUrl
 					}
 				} catch (e) {

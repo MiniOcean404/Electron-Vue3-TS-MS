@@ -22,6 +22,7 @@ body,
 html,
 #app,
 #content {
+	-webkit-app-region: drag; //告诉electron那些在无边框下可以拖拽
 	width: 100%;
 	height: 100%;
 }

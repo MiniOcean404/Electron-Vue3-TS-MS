@@ -1,76 +1,45 @@
 import { request, UserAgent, ContentType } from 'api/request'
 
-// 请求商品ID的HTML详情页
-export function getItemInfo(skuId: string) {}
+// 添加商品到购物车
+export function addGoodsToCart(Cookie: string, shopId, buyNumber) {
+	return request({
+		url: `https://cart.jd.com/gate.action`,
+		method: 'GET',
+		headers: {
+			Cookie,
+			Host: 'cart.jd.com'
+		},
+		responseType: 'document',
+		params: {
+			pid: shopId,
+			pcount: buyNumber,
+			ptype: 1
+		}
+	})
+}
 
-// /**
-//  * 全选购物车中的商品
-//  * @param Cookie
-//  * @returns {Promise<any>}
-//  */
-// function selectAllCart(Cookie) {
-// 	return request({
-// 		uri: URLS.SELECT_ALL,
-// 		headers: {
-// 			Cookie,
-// 			'User-Agent': UserAgent
-// 		},
-// 		resolveWithFullResponse: true
-// 	}).then((resp) => {
-// 		const result = handleResponse(resp)
-// 		if (result && result.sortedWebCartResult) {
-// 			return result.sortedWebCartResult.success
-// 		}
-// 		return false
-// 	})
-// }
-//
-// /**
-//  * 清空购物车
-//  * @param Cookie
-//  * @returns {Promise<any>}
-//  */
-// function clearCart(Cookie) {
-// 	return request({
-// 		uri: URLS.CLEAR_ALL,
-// 		headers: {
-// 			Cookie,
-// 			'User-Agent': UserAgent
-// 		},
-// 		resolveWithFullResponse: true
-// 	}).then((resp) => {
-// 		const result = handleResponse(resp)
-// 		if (result && result.sortedWebCartResult) {
-// 			return result.sortedWebCartResult.success
-// 		}
-// 		return false
-// 	})
-// }
-//
-// /**
-//  * 添加商品到购物车
-//  * @param Cookie
-//  * @param skuId
-//  * @param num
-//  * @returns {Promise<any>}
-//  */
-// async function addGoodsToCart(Cookie, skuId, num) {
-// 	return request({
-// 		uri: URLS.ADD_ITEM,
-// 		qs: {
-// 			pid: skuId,
-// 			pcount: num,
-// 			ptype: 1
-// 		},
-// 		headers: {
-// 			Cookie,
-// 			'User-Agent': UserAgent,
-// 			'Content-Type': ContentType
-// 		},
-// 		json: true,
-// 		resolveWithFullResponse: true
-// 	}).then((resp) => {
-// 		const html = handleResponse(resp)
-// 		return html.indexOf('成功') > -1
-// 	})
-// }
+// 全选购物车
+export function selectAllCart(Cookie: string) {
+	return request({
+		url: `https://cart.jd.com/selectAllItem.action`,
+		method: 'GET',
+		responseType: 'json',
+		headers: {
+			Cookie,
+			'User-Agent': UserAgent
+		}
+	})
+}
+
+// 删除选中的商品，配合全选购物车进行使用
+export function clearCart(Cookie: string) {
+	return request({
+		url: `https://cart.jd.com/batchRemoveSkusFromCart.action`,
+		method: 'GET',
+		responseType: 'json',
+		headers: {
+			Cookie,
+			'User-Agent': UserAgent
+		}
+	})
+}

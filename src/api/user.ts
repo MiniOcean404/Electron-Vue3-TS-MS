@@ -4,7 +4,7 @@ import { request, UserAgent } from 'api/request'
 export function checkUser(Cookie: string) {
 	return request({
 		url: 'https://order.jd.com/lazy/isPlusMember.action',
-		methods: 'GET',
+		method: 'GET',
 		headers: {
 			Cookie,
 			UserAgent,

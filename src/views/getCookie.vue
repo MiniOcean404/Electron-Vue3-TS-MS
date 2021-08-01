@@ -11,7 +11,7 @@
 		</div>
 	</div>
 </template>
-  
+
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 const { ipcRenderer, shell, clipboard, net, remote } = window.require('electron')
