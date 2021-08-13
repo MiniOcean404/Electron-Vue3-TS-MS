@@ -5,9 +5,3 @@ export interface UserInfo {
 	isLogin: string
 	isPlusMember: string
 }
-
-export interface State {
-	account: object[]
-	shopInfo: object[]
-	taskInfo: object[]
-}

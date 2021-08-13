@@ -1,7 +1,7 @@
 import { ContentType, request, UserAgent } from 'api/request'
 
 // 获取下单信息
-export function getBuyInfo(Cookie: string, shopId: string, buyNumber: number) {
+export function getBuyInfo(Cookie: string, skuId: string, buyNumber: number) {
 	return request({
 		url: `https://marathon.jd.com/seckillnew/orderService/pc/init.action`,
 		method: 'GET',
@@ -10,7 +10,7 @@ export function getBuyInfo(Cookie: string, shopId: string, buyNumber: number) {
 			'User-Agent': UserAgent
 		},
 		data: {
-			sku: shopId,
+			sku: skuId,
 			num: buyNumber
 		}
 	})
@@ -53,7 +53,7 @@ async function orderSubmit(Cookie: string) {
 /**
  * 查询某个商品的库存
  */
-// async function getItemStock(shopId, buyNumber, buyInfo) {
+// async function getItemStock(skuId, buyNumber, buyInfo) {
 //   // 请求商品详情页
 //   const { cat, venderId } = await getItemInfo(skuId)
 //   const area = `${buyInfo['addressList'][0]['provinceId']}_${buyInfo['addressList'][0]['cityId']}_${buyInfo['addressList'][0]['countyId']}_${buyInfo['addressList'][0]['townId']}`

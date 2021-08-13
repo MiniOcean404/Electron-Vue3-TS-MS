@@ -1,7 +1,7 @@
 import { request, UserAgent, ContentType } from 'api/request'
 
 // 添加商品到购物车
-export function addGoodsToCart(Cookie: string, shopId, buyNumber) {
+export function addGoodsToCart(Cookie: string, skuId: string, buyNumber: number) {
 	return request({
 		url: `https://cart.jd.com/gate.action`,
 		method: 'GET',
@@ -11,7 +11,7 @@ export function addGoodsToCart(Cookie: string, shopId, buyNumber) {
 		},
 		responseType: 'document',
 		params: {
-			pid: shopId,
+			pid: skuId,
 			pcount: buyNumber,
 			ptype: 1
 		}

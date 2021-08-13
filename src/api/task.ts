@@ -42,7 +42,7 @@ export function getItemInfo(skuId: string) {
 						easyBuyUrl
 					}
 				} catch (e) {
-					ElMessageBox({ type: 'error', title: '错误', message: `解析商品ID链接的DOM出错了~` })
+					ElMessageBox({ type: 'error', title: '错误', message: `解析商品ID链接的DOM出错了~` }).then((r) => {})
 				} finally {
 				}
 			}

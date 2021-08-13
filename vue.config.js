@@ -32,6 +32,7 @@ module.exports = {
 
 		config.resolve.extensions
 			.add('.js')
+			.add('.tsx')
 			.add('.vue')
 			.add('less')
 			.add('sass')

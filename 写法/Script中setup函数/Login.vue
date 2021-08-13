@@ -35,7 +35,7 @@ function loginWindow() {
 				}, '')
 
 				loginWindow.destroy()
-				emit('AlreadyLogin' as any, cookie)
+				emit('loginEd' as any, cookie)
 				ElNotification({ type: 'success', title: '成功', message: '账号已添加' })
 			})
 			.catch(() => {

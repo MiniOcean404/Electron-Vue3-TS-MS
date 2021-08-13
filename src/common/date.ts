@@ -1,4 +1,4 @@
-export function formatDate(date, format) {
+export function formatDate(date: Date | number, format: string) {
 	let RegAndValue: object
 	if (date instanceof Date) {
 		RegAndValue = {
@@ -23,14 +23,16 @@ export function formatDate(date, format) {
 		if (reg.test(format)) {
 			const str = date instanceof Date ? value.toString() : Math.round(value).toString()
 			const match = RegExp.$1
-			const replace = replaceV(RegExp.$1.length, str)
 
-			format = format.replace(match, replace)
+			const replace = replaceV(RegExp.$1.length, str)
+			if (replace !== undefined) {
+				format = format.replace(match, replace)
+			}
 		}
 	}
 
 	// 在不足两位的前面加0
-	function replaceV(currentLength, str) {
+	function replaceV(currentLength: number, str: string): string | undefined {
 		if (str.length === 4) {
 			const start = 4 - RegExp.$1.length
 			return str.substr(start)

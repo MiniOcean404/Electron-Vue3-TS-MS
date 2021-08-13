@@ -1,4 +1,5 @@
-import { UserInfo, State } from 'types/store/module.d.ts'
+import { State } from '@/store'
+import { UserInfo } from 'types/store'
 
 export default {
 	namespaced: true,
@@ -26,7 +27,7 @@ export default {
 		REMOVE_All(state: State) {
 			state.account.length = 0
 		},
-		REMOVE_SOME_ONE(state: State, index) {
+		REMOVE_SOME_ONE(state: State, index: number) {
 			state.account.splice(index, 1)
 		}
 	},

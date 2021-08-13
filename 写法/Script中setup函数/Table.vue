@@ -38,5 +38,3 @@ function deleteAccount(scope) {
 	ElNotification({ type: 'success', title: '成功', message: '删除成功' })
 }
 </script>
-
-<style lang="scss" scoped></style>

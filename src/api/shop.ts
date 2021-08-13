@@ -5,7 +5,7 @@ export function getShopStore(area: string, skuIds: string) {
 	return request({
 		url: 'http://c0.3.cn/stocks',
 		method: 'GET',
-		responseType: 'json',
+		responseType: 'html',
 		params: {
 			type: 'getstocks', //商品库存
 			area, //地区编号

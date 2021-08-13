@@ -1,12 +1,11 @@
-import axios from 'axios'
-import { AxiosResponse, AxiosRequestConfig } from 'axios'
-import http from 'http'
-import https from 'https'
+const axios = window.require('axios')
+import { AxiosResponse, AxiosRequestConfig, Canceler } from 'axios'
 import Qs from 'qs'
 
 export const UserAgent =
 	'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36'
 export const ContentType = 'application/x-www-form-urlencoded'
+const http = window.require('axios/lib/adapters/http.js')
 
 export const request = axios.create({
 	baseURL: '',
@@ -19,7 +18,7 @@ export const request = axios.create({
 	// 最多转发数，用于node.js
 	maxRedirects: 5,
 	// 最大响应数据大小
-	maxContentLength: 2000,
+	maxContentLength: 200000,
 	headers: {
 		'Content-Type': 'application/json;charset=UTF-8'
 	},
@@ -41,9 +40,11 @@ export const request = axios.create({
 		return status >= 200 && status < 400
 	},
 
-	// 用于node.js
-	httpAgent: new http.Agent({ keepAlive: true }),
-	httpsAgent: new https.Agent({ keepAlive: true })
+	// xhr中用于node.js
+	// httpAgent: new http.Agent({ keepAlive: true }),
+	// httpsAgent: new https.Agent({ keepAlive: true }),
+
+	adapter: http
 
 	// proxy: {
 	// 	host: '127.0.0.1',
@@ -67,6 +68,7 @@ request.interceptors.request.use(
 request.interceptors.response.use(
 	(res: AxiosResponse) => {
 		removePendingRequest(res.config) // 从pendingRequest对象中移除请求
+		console.log('响应信息：\r\n', res)
 		return res
 	},
 
@@ -90,24 +92,24 @@ request.interceptors.response.use(
 const pendingRequest = new Map()
 
 // 生成取消重复请求Map中的key
-function generateReqKey(config) {
+function generateReqKey(config: AxiosRequestConfig) {
 	const { method, url, params, data } = config
 	return [method, url, Qs.stringify(params), Qs.stringify(data)].join('&')
 }
 
 // Map中没有就添加进去
-function addPendingRequest(config) {
+function addPendingRequest(config: AxiosRequestConfig) {
 	const requestKey = generateReqKey(config)
 	config.cancelToken =
 		config.cancelToken ||
-		new axios.CancelToken((cancel) => {
+		new axios.CancelToken((cancel: Canceler) => {
 			if (!pendingRequest.has(requestKey)) {
 				pendingRequest.set(requestKey, cancel)
 			}
 		})
 }
 // 删除重复请求
-function removePendingRequest(config) {
+function removePendingRequest(config: AxiosRequestConfig) {
 	const requestKey = generateReqKey(config)
 
 	if (pendingRequest.has(requestKey)) {

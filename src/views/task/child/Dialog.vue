@@ -7,11 +7,7 @@
 				</el-select>
 			</el-form-item>
 
-			<el-form-item label="是否定时">
-				<el-switch v-model="form.isTiming" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
-			</el-form-item>
-
-			<el-form-item v-show="form.isTiming" label="时间" required>
+			<el-form-item label="抢购时间" required>
 				<el-date-picker
 					v-model="form.buyDate"
 					placeholder="选择日期时间"
@@ -21,7 +17,7 @@
 			</el-form-item>
 
 			<el-form-item label="商品ID" required>
-				<el-input v-model="form.shopId" type="input"></el-input>
+				<el-input v-model="form.skuId" type="input"></el-input>
 			</el-form-item>
 
 			<el-form-item label="地址信息" required>
@@ -46,15 +42,15 @@
 import { defineComponent, defineEmits, reactive, ref, toRaw, watch } from 'vue'
 import { getItemInfo } from 'api/task'
 import { getShopStore, getShopPrice } from 'api/shop.ts'
-const fs = window.require('fs')
+import { check } from 'common/utils'
 
 import { ElMessageBox } from 'element-plus'
+import { CheckContent } from 'types/common'
 
 const formModule = {
 	taskType: 'Spike',
-	isTiming: true,
 	buyDate: '',
-	shopId: '',
+	skuId: '',
 	address: '',
 	buyNumber: 1
 }
@@ -91,19 +87,17 @@ export default defineComponent({
 		async function operate(v: string) {
 			switch (v) {
 				case 'sure':
-					check({ name: this.form.shopId, message: '商品ID不能为空' })
-					if (this.form.isTiming) {
-						check({ name: this.form.buyDate, message: '选择了打开定时，时间不能为空' })
-					}
+					check({ name: this.form.skuId, message: '商品ID不能为空' })
+					check({ name: this.form.buyDate, message: '抢购时间不能为空' })
 
-					const res = await getItemInfo(this.form.shopId)
-
+					// 获取商品信息DOM
+					const res = await getItemInfo(this.form.skuId)
 					// todo 地址不对
-					const shopStore = await getShopStore('19_1601_36953_62867', this.form.shopId)
-					const shopPrice = await getShopPrice(this.form.shopId)
+					const shopStore = await getShopStore('19_1601_36953_62867', this.form.skuId)
+					const shopPrice = await getShopPrice(this.form.skuId)
 
 					const taskInfo = Object.assign({}, this.form, res.data, {
-						shopStoreState: shopStore.data[this.form.shopId].StockStateName,
+						shopStoreState: JSON.parse(shopStore.data)[this.form.skuId].StockStateName,
 						shopPrice: shopPrice.data[0].op
 					})
 					this.$store.commit('task/SAVE_TASK_INFO', taskInfo)
@@ -116,11 +110,9 @@ export default defineComponent({
 		}
 
 		function beforeClose() {
-			ElMessageBox.confirm('确认关闭？')
-				.then((_) => {
-					context.emit('update:isShow', false)
-				})
-				.catch((_) => {})
+			ElMessageBox.confirm('确认关闭？').then((_) => {
+				context.emit('update:isShow', false)
+			})
 		}
 
 		return {
@@ -129,19 +121,6 @@ export default defineComponent({
 		}
 	}
 })
-
-function check({ name, value = undefined, message }) {
-	if (value) {
-		if (name !== value) {
-			ElMessageBox({ type: 'error', title: '错误', message })
-		}
-	} else {
-		if (name === null || name === undefined || name === '') {
-			ElMessageBox({ type: 'error', title: '错误', message })
-			throw new Error(message)
-		}
-	}
-}
 </script>
 
 <style lang="scss" scoped>

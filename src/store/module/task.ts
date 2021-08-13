@@ -1,10 +1,9 @@
-import { UserInfo, State } from 'types/store/module.d.ts'
+import { State } from '@/store'
+import { UserInfo } from 'types/store'
 
 export default {
 	namespaced: true,
-	state: {
-		taskInfo: []
-	},
+	state: () => ({ taskInfo: [] }),
 
 	getters: {
 		taskInfo(state: State) {
@@ -22,7 +21,8 @@ export default {
 		REMOVE_ALL(state: State) {
 			state.taskInfo.length = 0
 		},
-		REMOVE_SOME_ONE(state: State, index) {
+
+		REMOVE_SOME_ONE(state: State, index: number) {
 			state.taskInfo.splice(index, 1)
 		}
 	},

@@ -6,9 +6,9 @@
 </template>
 
 <script lang="ts" setup>
-import { getJDServerTime, getTaoBaoServerTime } from 'api/date'
+import { getJDServerTime, getTaoBaoServerTime } from '../../src/api/date'
 import { ref, onMounted, onBeforeUnmount, toRaw } from 'vue'
-import { formatDate } from '@/utils/date'
+import { formatDate } from '../../src/common/date'
 
 const jdTimeResult = ['currentTime2']
 const tbTimeResult = ['data', 't']
