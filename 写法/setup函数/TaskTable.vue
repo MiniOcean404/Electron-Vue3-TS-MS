@@ -36,10 +36,10 @@
 import { defineEmits, defineProps, computed, toRaw, reactive } from 'vue'
 import { ElNotification } from 'element-plus'
 import { useStore } from 'vuex'
-import taskApi, { getBuyInfo } from 'api/order'
-import { addGoodsToCart } from 'api/card'
-import { check, cycleUser } from 'common/utils'
-import { UserInfo } from 'types/store'
+import taskApi, { getBuyInfo } from '../../src/api/order'
+import { addGoodsToCart } from '../../src/api/card'
+import { check, cycleUser } from '../../src/common/utils'
+import { UserInfo } from '../../src/types/store'
 
 enum tip {
 	Spike = '该商品是预约抢购商品，需要自行加入到购物车，并确保购物车里不含其他可提交商品',

@@ -3,12 +3,13 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+// element-plus
 import ElementPlus from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css'
-// 解决element-plus默认英文改为中文
-import locale from 'element-plus/lib/locale/lang/zh-cn'
+import locale from 'element-plus/lib/locale/lang/zh-cn' // 解决element-plus默认英文改为中文
 import 'dayjs/locale/zh-cn'
 
+// 通用css
 import 'normalize.css'
 import './assets/css/base.scss'
 

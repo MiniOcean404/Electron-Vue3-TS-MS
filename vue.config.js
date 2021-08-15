@@ -4,6 +4,9 @@ function resolve(dir) {
 	return path.join(__dirname, dir)
 }
 
+// const isNoOnline = process.env.NODE_ENV !== 'online'
+const isNoOnline = false
+
 module.exports = {
 	devServer: {
 		port: 3000,
@@ -37,15 +40,15 @@ module.exports = {
 			.add('less')
 			.add('sass')
 
-		if (process.env.NODE_ENV !== 'online') {
+		if (isNoOnline) {
 			// 打包忽略引入的文件
 			config.set('externals', {
-				// vue: 'Vue',
-				// 'vue-router': 'VueRouter',
-				// vuex: 'Vuex',
-				// axios: 'axios',
-				// 'element-ui': 'ELEMENT',
-				// 'vue-quill-editor': 'VueQuillEditor'
+				vue: 'Vue',
+				'vue-router': 'VueRouter',
+				vuex: 'Vuex',
+				axios: 'axios',
+				'element-ui': 'ELEMENT',
+				'vue-quill-editor': 'VueQuillEditor'
 			})
 		}
 	},
@@ -65,21 +68,24 @@ module.exports = {
 		index: {
 			entry: 'src/main.ts',
 			template: 'public/index.html',
-			filename: 'index.html'
-			// chunks: ['chunk-vendors', 'chunk-common', 'index']
-			// cdn:
-			// 	process.env.NODE_ENV === 'online'
-			// 		? ''
-			// 		: {
-			// 				css: ['https://unpkg.com/element-ui/lib/theme-chalk/index.css'],
-			// 				js: [
-			// 					'https://cdn.bootcdn.net/ajax/libs/vue-router/3.5.1/vue-router.min.js',
-			// 					'https://cdn.bootcdn.net/ajax/libs/vue/2.6.14/vue.min.js',
-			// 					'https://cdn.bootcdn.net/ajax/libs/vuex/3.6.2/vuex.min.js',
-			// 					'https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js',
-			// 					'https://unpkg.com/element-ui/lib/index.js'
-			// 				]
-			// 		  }
+			filename: 'index.html',
+			chunks: ['chunk-vendors', 'chunk-common', 'index'],
+			cdn: isNoOnline
+				? {
+						css: [
+							'https://unpkg.com/element-ui/lib/theme-chalk/index.css',
+							'https://cdn.bootcdn.net/ajax/libs/wangEditor/3.1.1/wangEditor.min.css'
+						],
+						js: [
+							'https://cdn.bootcdn.net/ajax/libs/vue-router/3.5.1/vue-router.min.js',
+							'https://cdn.bootcdn.net/ajax/libs/vue/2.6.14/vue.min.js',
+							'https://cdn.bootcdn.net/ajax/libs/vuex/3.6.2/vuex.min.js',
+							'https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js',
+							'https://unpkg.com/element-ui/lib/index.js',
+							'https://cdn.bootcdn.net/ajax/libs/wangEditor/3.1.1/wangEditor.min.js'
+						]
+				  }
+				: ''
 		}
 	}
 }

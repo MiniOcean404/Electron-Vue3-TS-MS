@@ -1,9 +1,9 @@
 <template>
-	<div class="task-button">
-		<el-button type="primary" @click="$emit('clickButton', '添加任务')">添加任务</el-button>
-		<el-button type="primary" @click="$emit('clickButton', '删除所有任务')">删除所有任务</el-button>
-		<el-button type="primary" @click="stopAllTask">停止所有任务</el-button>
-	</div>
+  <div class="task-button">
+    <el-button type="primary" @click="$emit('clickButton', '添加任务')">添加任务</el-button>
+    <el-button type="primary" @click="$emit('clickButton', '删除所有任务')">删除所有任务</el-button>
+    <el-button type="primary" @click="stopAllTask">停止所有任务</el-button>
+  </div>
 </template>
 
 <script lang="ts">

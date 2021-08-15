@@ -17,6 +17,9 @@
     "strict": true,
     "esModuleInterop": true, // 解析非相对模块名的基准目录
     "sourceMap": true,
+    "skipLibCheck": true, // 忽略所有的声明文件（ *.d.ts）的类型检查。
+    "experimentalDecorators": true,
+    "types": ["webpack-env", "node"], // 要包含的类型声明文件名列表
     "paths": {
       "@/*": [
         "src/*"
@@ -47,14 +50,11 @@
       "scripthost"
     ],
 
-    //后续去除
+    //后续去除关闭的其他严格模式
 //    "noImplicitAny": false,                       /*在隐含'any'类型的表达式和声明上引发错误。*/
     "noImplicitThis": false,                      /*如果'this'表达式隐含了'any'类型，则引发错误。*/
 
-    "skipLibCheck": true, // 忽略所有的声明文件（ *.d.ts）的类型检查。
     "importHelpers": true, // 从 tslib 导入辅助工具函数（比如 __extends， __rest等）
-    "experimentalDecorators": true,
-    "types": ["webpack-env", "node","common"], // 要包含的类型声明文件名列表
   },
 
 }

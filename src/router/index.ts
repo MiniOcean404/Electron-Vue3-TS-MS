@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 
 const Home = () => import(/* webpackChunkName: "Home" */ 'views/home/Home.tsx')
-const Task = () => import(/* webpackChunkName: "Task" */ 'views/task/Task.vue')
+const Task = () => import(/* webpackChunkName: "Task" */ 'views/task/Task.tsx')
 const jdTime = () => import(/* webpackChunkName: "jdTime" */ 'views/server-time/server-time.tsx')
 
 const routes: Array<RouteRecordRaw> = [

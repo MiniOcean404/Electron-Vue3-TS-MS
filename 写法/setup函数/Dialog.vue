@@ -40,13 +40,11 @@
 
 <script lang="ts">
 import { defineComponent, defineEmits, reactive, ref, toRaw, watch } from 'vue'
-import { getItemInfo } from 'api/task'
-import { getShopStore, getShopPrice } from 'api/shop.ts'
-import { check } from 'common/utils'
-
+import { getItemInfo } from '../../src/api/task'
+import { getShopStore, getShopPrice } from 'api/../../src/api/shop'
+import { check } from '../../src/common/utils'
 import { ElMessageBox } from 'element-plus'
-import { CheckContent } from 'types/common'
-
+import { CheckContent } from '../../src/types/common'
 const formModule = {
 	taskType: 'Spike',
 	buyDate: '',
@@ -54,7 +52,6 @@ const formModule = {
 	address: '',
 	buyNumber: 1
 }
-
 export default defineComponent({
 	name: 'Dialog',
 	props: {
@@ -83,19 +80,17 @@ export default defineComponent({
 			this.form = JSON.parse(JSON.stringify(formModule))
 		}
 	},
-	setup(props, context) {
+	setup(props, ctx) {
 		async function operate(v: string) {
 			switch (v) {
 				case 'sure':
 					check({ name: this.form.skuId, message: '商品ID不能为空' })
 					check({ name: this.form.buyDate, message: '抢购时间不能为空' })
-
 					// 获取商品信息DOM
 					const res = await getItemInfo(this.form.skuId)
 					// todo 地址不对
 					const shopStore = await getShopStore('19_1601_36953_62867', this.form.skuId)
 					const shopPrice = await getShopPrice(this.form.skuId)
-
 					const taskInfo = Object.assign({}, this.form, res.data, {
 						shopStoreState: JSON.parse(shopStore.data)[this.form.skuId].StockStateName,
 						shopPrice: shopPrice.data[0].op
@@ -105,16 +100,13 @@ export default defineComponent({
 				case 'cancel':
 					break
 			}
-
-			context.emit('update:isShow', false)
+			ctx.emit('update:isShow', false)
 		}
-
 		function beforeClose() {
 			ElMessageBox.confirm('确认关闭？').then((_) => {
-				context.emit('update:isShow', false)
+				ctx.emit('update:isShow', false)
 			})
 		}
-
 		return {
 			operate,
 			beforeClose
