@@ -1,17 +1,10 @@
-import { check } from 'common/utils';
-import { CheckContent } from 'types/common';
-import {
-  defineComponent,
-  defineEmits,
-  isReactive,
-  reactive,
-  ref,
-  watch
-  } from 'vue';
-import { ElMessageBox } from 'element-plus';
-import { getItemInfo } from 'api/task';
-import { getShopPrice, getShopStore } from 'api/shop';
-import { useStore } from 'vuex';
+import { check } from 'common/utils'
+import { CheckContent } from 'types/common'
+import { defineComponent, defineEmits, isReactive, reactive, ref, toRaw, watch } from 'vue'
+import { ElMessageBox } from 'element-plus'
+import { getItemInfo } from 'api/task'
+import { getShopPrice, getShopStore } from 'api/shop'
+import { useStore } from 'vuex'
 
 const formModule = {
 	taskType: 'Spike',
@@ -54,19 +47,20 @@ export default defineComponent({
 		)
 
 		async function operate(v: string) {
+			const rawForm = toRaw(form)
 			switch (v) {
 				case 'sure':
-					check({ name: form.skuId, message: '商品ID不能为空' })
-					check({ name: form.buyDate, message: '抢购时间不能为空' })
+					check({ name: rawForm.skuId, message: '商品ID不能为空' })
+					check({ name: rawForm.buyDate, message: '抢购时间不能为空' })
 
 					// 获取商品信息DOM
-					const res = await getItemInfo(form.skuId)
+					const res = await getItemInfo(rawForm.skuId)
 					// todo 地址不对
-					const shopStore = await getShopStore('19_1601_36953_62867', form.skuId)
-					const shopPrice = await getShopPrice(form.skuId)
+					const shopStore = await getShopStore('19_1601_36953_62867', rawForm.skuId)
+					const shopPrice = await getShopPrice(rawForm.skuId)
 
-					const taskInfo = Object.assign({}, form, res.data, {
-						shopStoreState: JSON.parse(shopStore.data)[form.skuId].StockStateName,
+					const taskInfo = Object.assign({}, rawForm, res.data, {
+						shopStoreState: JSON.parse(shopStore.data)[rawForm.skuId].StockStateName,
 						shopPrice: shopPrice.data[0].op
 					})
 					store.commit('task/SAVE_TASK_INFO', taskInfo)
