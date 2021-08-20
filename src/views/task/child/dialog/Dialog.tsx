@@ -1,10 +1,17 @@
-import { defineComponent, isReactive, reactive, ref, watch, defineEmits } from 'vue'
-import { useStore } from 'vuex'
-import { ElMessageBox } from 'element-plus'
-import { check } from 'common/utils'
-import { getItemInfo } from 'api/task'
-import { getShopPrice, getShopStore } from 'api/shop'
-import { CheckContent } from 'types/common'
+import { check } from 'common/utils';
+import { CheckContent } from 'types/common';
+import {
+  defineComponent,
+  defineEmits,
+  isReactive,
+  reactive,
+  ref,
+  watch
+  } from 'vue';
+import { ElMessageBox } from 'element-plus';
+import { getItemInfo } from 'api/task';
+import { getShopPrice, getShopStore } from 'api/shop';
+import { useStore } from 'vuex';
 
 const formModule = {
 	taskType: 'Spike',

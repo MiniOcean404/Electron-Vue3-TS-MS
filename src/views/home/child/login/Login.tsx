@@ -1,6 +1,8 @@
+
 import { defineComponent, defineEmits } from 'vue'
 import './index.scss'
 import { ElNotification } from 'element-plus'
+const loginUrl = 'https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd.com%2F'
 
 export default defineComponent({
 	name: 'Login',
@@ -12,14 +14,16 @@ export default defineComponent({
 
 		function loginWindow() {
 			const loginWindow = new BrowserWindow({ width: 1000, height: 800 })
-			loginWindow.loadURL('https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd.com%2F')
-			loginWindow.webContents.on('did-navigate', (event, url) => {
+			loginWindow.loadURL(loginUrl)
+			loginWindow.webContents.on('did-navigate', (event:any, url:string) => {
 				if (url !== 'https://www.jd.com/') return
 
 				loginWindow.webContents.session.cookies
 					.get({ domain: '.jd.com' })
-					.then((cookies) => {
-						const cookie = cookies.reduce((str, cookie) => {
+					.then((cookies:object[]) => {
+						const cookie = cookies.reduce((str:string, cookie:any) => {
+              console.log('%c [ cookie ] :', "color: #bf2c9f; background: pink; font-size: 13px;", cookie)
+
 							const { name, value } = cookie
 							str += `${name}=${value};`
 							return str
@@ -42,11 +46,11 @@ export default defineComponent({
 	render() {
 		const { loginWindow } = this
 		return (
-			<>
+			<div>
 				<el-button class="login-button" type="primary" onClick={loginWindow}>
 					登录账号
 				</el-button>
-			</>
+			</div>
 		)
 	}
 })

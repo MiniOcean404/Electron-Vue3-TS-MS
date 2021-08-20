@@ -1,10 +1,10 @@
-import { computed, defineComponent, toRaw } from 'vue'
-import './index.scss'
-import { useStore } from 'vuex'
-import { cycleUser } from 'common/utils'
-import { ElNotification } from 'element-plus'
-import { UserInfo } from 'types/store'
-import { addGoodsToCart } from 'api/card'
+import { addGoodsToCart } from 'api/card';
+import { computed, defineComponent, toRaw } from 'vue';
+import { cycleUser } from 'common/utils';
+import { ElNotification } from 'element-plus';
+import { UserInfo } from 'types/store';
+import { useStore } from 'vuex';
+import './index.scss';
 
 enum tip {
 	Spike = '该商品是预约抢购商品，需要自行加入到购物车，并确保购物车里不含其他可提交商品',
@@ -90,7 +90,7 @@ export default defineComponent({
 		}
 
 		return (
-			<>
+			<div>
 				<el-table data={data} style="width: 100%" height="90%" stripe={true} border={true}>
 					<el-table-column label="序号" type="index" width="50" align="center" />
 
@@ -110,7 +110,7 @@ export default defineComponent({
 
 					<el-table-column width="100" v-slots={deleteTask} />
 				</el-table>
-			</>
+			</div>
 		)
 	}
 })

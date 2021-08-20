@@ -1,3 +1,4 @@
+
 import { defineComponent, ref, computed, toRaw } from 'vue'
 import { useStore } from 'vuex'
 import Login from 'views/home/child/login/Login.tsx'
@@ -43,10 +44,10 @@ export default defineComponent({
 	render() {
 		const { alreadyLogin, allUser } = this
 		return (
-			<>
+			<div>
 				<Login onAlreadyLogin={alreadyLogin}> </Login>
 				<Table tableData={allUser}> </Table>
-			</>
+			</div>
 		)
 	}
 })

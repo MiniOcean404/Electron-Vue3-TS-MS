@@ -1,3 +1,4 @@
+
 import { defineComponent } from 'vue'
 import './index.scss'
 
@@ -15,7 +16,7 @@ export default defineComponent({
 	render() {
 		const { stopAllTask, $emit } = this
 		return (
-			<>
+			<div>
 				<div class="task-button">
 					<el-button type="primary" onClick={$emit.bind(this, 'clickButton', '添加任务')}>
 						添加任务
@@ -27,7 +28,7 @@ export default defineComponent({
 						停止所有任务
 					</el-button>
 				</div>
-			</>
+			</div>
 		)
 	}
 })

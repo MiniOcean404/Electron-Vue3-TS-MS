@@ -1,3 +1,4 @@
+
 import { defineComponent, defineEmits, defineProps, computed, reactive, render } from 'vue'
 import { useStore } from 'vuex'
 import { ElNotification } from 'element-plus'
@@ -31,8 +32,8 @@ export default defineComponent({
     const { tableData, deleteAccount } = this
 
     return (
-      <>
-        <el-table data={tableData} style="width: 100%" height="90%" border="true">
+      <div>
+        <el-table data={tableData} class='login-table' height="90%" border={true}>
           <el-table-column prop="name" label="用户名" align="center" />
           <el-table-column prop="isLogin" label="是否登录" align="center" />
           <el-table-column prop="isPlusMember" label="是否会员" align="center" />
@@ -46,7 +47,7 @@ export default defineComponent({
             }}
           </el-table-column>
         </el-table>
-      </>
+      </div>
     )
   }
 })
