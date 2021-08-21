@@ -30,7 +30,6 @@ export default defineComponent({
 
 						loginWindow.destroy()
 						context.emit('AlreadyLogin', cookie)
-						notification['success']({ message: '账号已添加' })
 					})
 					.catch(() => {
 						notification['error']({ message: '获取Cookie超时或者出现其他问题' })
