@@ -1,15 +1,15 @@
-import { ElMessageBox } from 'element-plus'
 import { CheckContent } from 'types/common'
+import { notification } from 'ant-design-vue'
 
 export function check({ express, message }: CheckContent): void
 export function check({ name, message }: CheckContent): void
 export function check({ name, express = false, message }: CheckContent): void {
 	if (express) {
-		ElMessageBox({ type: 'error', title: '错误', message }).then((r) => {})
+		notification['error']({ message })
 	}
 
 	if (!name) {
-		ElMessageBox({ type: 'error', title: '错误', message }).then((r) => {})
+		notification['error']({ message })
 		throw new Error(message)
 	}
 }

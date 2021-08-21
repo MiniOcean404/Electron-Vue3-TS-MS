@@ -3,11 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-// element-plus
-import ElementPlus from 'element-plus'
-import 'element-plus/lib/theme-chalk/index.css'
-import locale from 'element-plus/lib/locale/lang/zh-cn' // 解决element-plus默认英文改为中文
-import 'dayjs/locale/zh-cn'
+// Antd
+import Antd from 'ant-design-vue'
+import 'ant-design-vue/dist/antd.css'
 
 // 通用css
 import 'normalize.css'
@@ -16,5 +14,5 @@ import './assets/css/base.scss'
 createApp(App)
 	.use(store)
 	.use(router)
-	.use(ElementPlus, { locale, size: 'small', zIndex: 3000 })
+	.use(Antd)
 	.mount('#app')

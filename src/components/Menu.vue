@@ -1,38 +1,40 @@
 <template>
-	<el-menu default-active="1" class="side" router @open="handleOpen" @close="handleClose">
-		<el-menu-item index="/">
-			<i class="el-icon-menu"></i>
-			<span slot="title">登录</span>
-		</el-menu-item>
+	<a-menu style="width: 256px" mode="vertical" @click="handleClick">
+		<a-menu-item key="home">登录</a-menu-item>
+		<a-menu-item key="task">秒杀</a-menu-item>
+		<a-menu-item key="jdTime">服务器时间</a-menu-item>
 
-		<el-menu-item index="/task">
-			<i class="el-icon-menu"></i>
-			<span slot="title">秒杀</span>
-		</el-menu-item>
+		<!--		<a-sub-menu key="home" title="登录">-->
+		<!--			<a-menu-item key="3">儿子</a-menu-item>-->
 
-		<el-menu-item index="/jdTime">
-			<i class="el-icon-menu"></i>
-			<span slot="title">服务器时间</span>
-		</el-menu-item>
-	</el-menu>
+		<!--			<a-sub-menu key="sub1-2" title="子菜单">-->
+		<!--				<a-menu-item key="5">孙子菜单选项</a-menu-item>-->
+		<!--			</a-sub-menu>-->
+		<!--		</a-sub-menu>-->
+	</a-menu>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, reactive, toRefs, VNodeChild } from 'vue'
+import { useRouter } from 'vue-router'
+
+interface MenuInfo {
+	key: string
+	keyPath: string[]
+	item: VNodeChild
+	domEvent: MouseEvent
+}
 
 export default defineComponent({
 	setup() {
-		const isCollapse = ref(true)
-		const handleOpen = (key: string, keyPath: string) => {
-			console.log(key, keyPath)
+		const router = useRouter()
+
+		const handleClick = (e: MenuInfo) => {
+			router.push({ name: e.key })
 		}
-		const handleClose = (key: string, keyPath: string) => {
-			console.log(key, keyPath)
-		}
+
 		return {
-			isCollapse,
-			handleOpen,
-			handleClose
+			handleClick
 		}
 	}
 })

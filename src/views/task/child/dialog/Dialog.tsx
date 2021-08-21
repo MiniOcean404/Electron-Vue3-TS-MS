@@ -1,20 +1,21 @@
 import { check } from 'common/utils'
 import { CheckContent } from 'types/common'
-import { defineComponent, defineEmits, isReactive, reactive, ref, toRaw, watch } from 'vue'
-import { ElMessageBox } from 'element-plus'
+import { defineComponent, defineEmits, isReactive, reactive, ref, toRaw, toRefs, watch } from 'vue'
+// import { ElMessageBox } from 'element-plus'
 import { getItemInfo } from 'api/task'
 import { getShopPrice, getShopStore } from 'api/shop'
+import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
-const formModule = {
-	taskType: 'Spike',
-	buyDate: '',
-	skuId: '',
-	address: '',
-	buyNumber: 1
+interface DialogInfo {
+	taskType: string
+	buyDate: string
+	skuId: string
+	address: string
+	buyNumber: number
 }
 
-const option = [
+const typeOption = reactive([
 	{
 		value: 'Spike',
 		label: '预约抢购'
@@ -23,7 +24,7 @@ const option = [
 		value: 'Reservation',
 		label: '秒杀商品'
 	}
-]
+])
 
 export default defineComponent({
 	name: 'Dialog',
@@ -36,15 +37,19 @@ export default defineComponent({
 	emits: ['update:isShow'],
 	setup(props, ctx) {
 		const store = useStore()
-		let form = reactive(JSON.parse(JSON.stringify(formModule)))
-		const typeOption = reactive(option)
-
 		watch(
 			() => props.isShow,
-			(value, prevCount) => {
-				form = reactive(JSON.parse(JSON.stringify(formModule)))
-			}
+			(value, prevCount) => {}
 		)
+
+		const formRef = ref()
+		let form = reactive({
+			taskType: 'Spike',
+			buyDate: '',
+			skuId: '',
+			address: '',
+			buyNumber: 1
+		})
 
 		async function operate(v: string) {
 			const rawForm = toRaw(form)
@@ -55,14 +60,7 @@ export default defineComponent({
 
 					// 获取商品信息DOM
 					const res = await getItemInfo(rawForm.skuId)
-					// todo 地址不对
-					const shopStore = await getShopStore('19_1601_36953_62867', rawForm.skuId)
-					const shopPrice = await getShopPrice(rawForm.skuId)
-
-					const taskInfo = Object.assign({}, rawForm, res.data, {
-						shopStoreState: JSON.parse(shopStore.data)[rawForm.skuId].StockStateName,
-						shopPrice: shopPrice.data[0].op
-					})
+					const taskInfo = Object.assign({}, rawForm, res.data)
 					store.commit('task/SAVE_TASK_INFO', taskInfo)
 					break
 				case 'cancel':
@@ -72,73 +70,57 @@ export default defineComponent({
 			ctx.emit('update:isShow', false)
 		}
 
-		function beforeClose() {
-			ElMessageBox.confirm('确认关闭？').then((_) => {
-				ctx.emit('update:isShow', false)
-			})
-		}
-
 		return {
 			operate,
-			beforeClose,
+			form,
 			typeOption,
-			form
+			formRef
 		}
 	},
 	render(createElement: any) {
-		const { operate, beforeClose, form, typeOption, isShow } = this
-
-		const footer = {
-			footer: () => (
-				<span class="dialog-footer">
-					<el-button onClick={operate.bind(this, 'cancel')}>取 消</el-button>
-					<el-button type="primary" onClick={operate.bind(this, 'sure')}>
-						确 定
-					</el-button>
-				</span>
-			)
-		}
+		const { operate, form, typeOption, isShow } = this
 
 		return (
 			<div>
-				<el-dialog
-					v-model={isShow}
-					onBeforeClose={beforeClose}
+				<a-modal
+					v-model={[isShow, 'visible']}
 					title="添加任务"
 					width="40%"
-					center={true}
-					v-slots={footer}>
-					<el-form ref="form" model={form} label-width="80px">
-						<el-form-item label="抢购类型">
-							<el-select v-model={form.taskType} placeholder="请选择" style="width: 100%">
+					closable={false}
+					onOk={operate.bind(this, 'sure')}
+					onCancel={operate.bind(this, 'cancel')}>
+					<a-form
+						ref="formRef"
+						model={form}
+						labelAlign="right"
+						labelCol={{ span: 4, offset: 0 }}
+						// rules={rules}
+					>
+						<a-form-item label="抢购类型" name="name">
+							<a-select ref="select" v-model={[form.taskType, 'value']} style="width: 120px">
 								{typeOption.map((item: any) => {
-									return <el-option key={item.value} label={item.label} value={item.value} />
+									return <a-select-option value={item.value}>{item.label}</a-select-option>
 								})}
-							</el-select>
-						</el-form-item>
+							</a-select>
+						</a-form-item>
 
-						<el-form-item label="抢购时间" required={true}>
-							<el-date-picker
-								v-model={form.buyDate}
-								placeholder="选择日期时间"
-								type="datetime"
-								value-format="YYYY-MM-DD HH:mm:ss"
-							/>
-						</el-form-item>
+						<a-form-item label="抢购时间">
+							<a-date-picker v-model={[form.buyDate, 'value']} />
+						</a-form-item>
 
-						<el-form-item label="商品ID" required={true}>
-							<el-input v-model={form.skuId} type="input" />
-						</el-form-item>
+						<a-form-item label="商品ID">
+							<a-input v-model={[form.skuId, 'value']} />
+						</a-form-item>
 
-						<el-form-item label="地址信息" required={true}>
-							<el-input v-model={form.address} type="input" />
-						</el-form-item>
+						<a-form-item label="地址信息">
+							<a-input v-model={[form.address, 'value']} />
+						</a-form-item>
 
-						<el-form-item label="购买数量">
-							<el-input-number v-model={form.buyNumber} max={1000} min={1} label="描述文字" />
-						</el-form-item>
-					</el-form>
-				</el-dialog>
+						<a-form-item label="购买数量">
+							<a-input-number id="inputNumber" v-model={[form.buyNumber, 'value']} min={1} max={10} />
+						</a-form-item>
+					</a-form>
+				</a-modal>
 			</div>
 		)
 	}

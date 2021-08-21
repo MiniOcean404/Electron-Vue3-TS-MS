@@ -34,7 +34,7 @@
 
 <script lang="ts">
 import { defineEmits, defineProps, computed, toRaw, reactive } from 'vue'
-import { ElNotification } from 'element-plus'
+// import { ElNotification } from 'element-plus'
 import { useStore } from 'vuex'
 import taskApi, { getBuyInfo } from '../../src/api/order'
 import { addGoodsToCart } from '../../src/api/card'

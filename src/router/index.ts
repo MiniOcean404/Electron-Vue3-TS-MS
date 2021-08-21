@@ -7,7 +7,7 @@ const jdTime = () => import(/* webpackChunkName: "jdTime" */ 'views/server-time/
 const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/',
-		name: 'Home',
+		name: 'home',
 		component: Home
 	},
 	{

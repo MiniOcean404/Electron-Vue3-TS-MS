@@ -43,7 +43,7 @@ import { defineComponent, defineEmits, reactive, ref, toRaw, watch } from 'vue'
 import { getItemInfo } from '../../src/api/task'
 import { getShopStore, getShopPrice } from 'api/../../src/api/shop'
 import { check } from '../../src/common/utils'
-import { ElMessageBox } from 'element-plus'
+// import { ElMessageBox } from 'element-plus'
 import { CheckContent } from '../../src/types/common'
 const formModule = {
 	taskType: 'Spike',

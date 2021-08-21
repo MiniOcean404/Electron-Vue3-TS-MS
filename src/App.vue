@@ -31,6 +31,10 @@ html,
   display: flex;
   main {
     width: 100%;
+    .main {
+      width: inherit;
+      height: 96%;
+    }
   }
 }
 </style>

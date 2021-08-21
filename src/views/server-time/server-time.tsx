@@ -1,4 +1,3 @@
-
 import { defineComponent, ref, onMounted, onBeforeUnmount } from 'vue'
 import { formatDate } from 'common/date'
 
@@ -71,14 +70,14 @@ export default defineComponent({
 
 		return (
 			<div>
-				<el-tabs v-model={currentTab} type="card" onTabClick={tabClick}>
-					<el-tab-pane label="京东" name="jd">
+				<a-tabs type="card" v-model={[currentTab, 'activeKey']} onTabClick={tabClick}>
+					<a-tab-pane key="jd" tab="京东">
 						{{ JDTime }}
-					</el-tab-pane>
-					<el-tab-pane label="淘宝" name="tb">
+					</a-tab-pane>
+					<a-tab-pane key="tb" tab="淘宝">
 						{{ TaoBaoTime }}
-					</el-tab-pane>
-				</el-tabs>
+					</a-tab-pane>
+				</a-tabs>
 			</div>
 		)
 	}

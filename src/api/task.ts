@@ -1,5 +1,5 @@
 import { request, UserAgent, ContentType } from 'api/request'
-import { ElMessageBox } from 'element-plus'
+import { notification } from 'ant-design-vue'
 
 // 请求商品ID的HTML详情页
 export function getItemInfo(skuId: string) {
@@ -42,7 +42,7 @@ export function getItemInfo(skuId: string) {
 						easyBuyUrl
 					}
 				} catch (e) {
-					ElMessageBox({ type: 'error', title: '错误', message: `解析商品ID链接的DOM出错了~` }).then((r) => {})
+					notification['error']({ message: `解析商品ID链接的DOM出错了~` })
 				} finally {
 				}
 			}

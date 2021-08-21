@@ -1,6 +1,10 @@
-.shop-img {
-  width: 5em;
-  height: 5em;
-  border-radius: 50%;
-  margin: auto;
+#ms {
+	width: inherit;
+	height: inherit;
+	.shop-img {
+		width: 5em;
+		height: 5em;
+		border-radius: 50%;
+		margin: auto;
+	}
 }

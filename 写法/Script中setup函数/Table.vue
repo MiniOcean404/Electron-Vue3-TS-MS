@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { defineEmits, defineProps, computed, reactive } from 'vue'
 import { useStore } from 'vuex'
-import { ElNotification } from 'element-plus'
+// import { ElNotification } from 'element-plus'
 
 const store = useStore()
 const isHaveContent = computed(() => tableData.length)

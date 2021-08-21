@@ -5,7 +5,7 @@
 		</div>
 
 		<div>
-			<el-button type="primary" @click="getCookie">获取cookie</el-button>
+			<a-button type="primary" @click="getCookie">获取cookie</a-button>
 			<p>当前的cookie为：</p>
 			<p>{{ cookie }}</p>
 		</div>
@@ -21,7 +21,7 @@ export default defineComponent({
 	data() {
 		return {
 			cookie: '',
-			QRCodeUrl: `https://qr.m.jd.com/show?appid=133&size=147&t=${Date.now().toString()}`,
+			QRCodeUrl: `https://qr.m.jd.com/show?appid=133&size=147&t=${Date.now().toString()}`
 		}
 	},
 	setup() {},
@@ -33,7 +33,7 @@ export default defineComponent({
 
 			const _this = this
 			ipcRenderer.send('get-cookie')
-			ipcRenderer.on('cookie', function (event, arg) {
+			ipcRenderer.on('cookie', function(event, arg) {
 				ipcRenderer.removeAllListeners('cookie')
 				arg.forEach((i: any) => {
 					if (i.name === 'QRCodeKey') {
@@ -45,8 +45,8 @@ export default defineComponent({
 				})
 				console.log('cookie', _this.cookie)
 			})
-		},
-	},
+		}
+	}
 })
 </script>
 
