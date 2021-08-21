@@ -48,8 +48,18 @@ export default defineComponent({
 			const rawForm = toRaw(form)
 			switch (v) {
 				case 'sure':
-					check({ name: rawForm.skuId, message: '商品ID不能为空' })
-					check({ name: rawForm.buyDate, message: '抢购时间不能为空' })
+					check(rawForm.skuId, [
+						{
+							type: 'noCondition',
+							message: '商品ID不能为空'
+						}
+					])
+					check(rawForm.buyDate, [
+						{
+							type: 'noCondition',
+							message: '抢购时间不能为空'
+						}
+					])
 
 					// 获取商品信息DOM
 					const res = await getItemInfo(rawForm.skuId)

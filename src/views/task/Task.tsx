@@ -1,8 +1,8 @@
 import { computed, defineComponent, ref } from 'vue'
 import { useStore } from 'vuex'
-import TaskButton from 'views/task/child/task-button/TaskButton.tsx'
-import TaskTable from 'views/task/child/task-table/TaskTable.tsx'
-import TaskDialog from 'views/task/child/dialog/Dialog.tsx'
+import TaskButton from 'views/task/task-button/TaskButton.tsx'
+import TaskTable from 'views/task/task-table/TaskTable.tsx'
+import TaskDialog from 'views/task/dialog/Dialog.tsx'
 
 export default defineComponent({
 	name: 'Task',

@@ -1,17 +1,23 @@
-import { CheckContent } from 'types/common'
+import { checkName, CheckCondition, CheckType } from 'types/common'
 import { notification } from 'ant-design-vue'
 
-export function check({ express, message }: CheckContent): void
-export function check({ name, message }: CheckContent): void
-export function check({ name, express = false, message }: CheckContent): void {
-	if (express) {
-		notification['error']({ message })
-	}
+export function check(name: checkName, conditionArr: Array<CheckCondition>) {
+	conditionArr.forEach((i) => {
+		const condition = i.condition
+		const message = i.message
+		const type = i.type
 
-	if (!name) {
-		notification['error']({ message })
-		throw new Error(message)
-	}
+		const flag: CheckType = {
+			noCondition: !condition && message !== '' && (name === '' || name === undefined || name === null),
+			isRegExp: condition instanceof RegExp && !condition.test(typeof name === 'string' ? name : ''),
+			isBoole: name === undefined && typeof condition === 'boolean' && condition
+		}
+
+		if (flag[type]) {
+			notification['error']({ message })
+			throw new Error(message)
+		}
+	})
 }
 
 export function cycleUser(user: object[], fn: Function, ...args: object[]) {

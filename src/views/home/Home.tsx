@@ -1,13 +1,12 @@
 import { defineComponent, ref, computed, toRaw } from 'vue'
 import { useStore } from 'vuex'
-import Login from 'views/home/child/login/Login.tsx'
-import Table from 'views/home/child/user-table/Table.tsx'
+import Login from 'views/home/login/Login.tsx'
+import Table from 'views/home/user-table/Table.tsx'
 import { checkUser } from 'api/user'
 
 export default defineComponent({
 	name: 'Home',
 	setup(props, context) {
-		// const tableData: Ref<object[]> = ref([])
 		const store = useStore()
 		const Cookie = ref('')
 		const allUser = computed(() => store.getters['user/userInfo'])
