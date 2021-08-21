@@ -1,6 +1,6 @@
 import { addGoodsToCart } from 'api/card'
 import { computed, defineComponent, toRaw } from 'vue'
-import { cycleUser } from 'common/utils'
+import { check, cycleUser } from 'common/utils'
 import { UserInfo } from 'types/store'
 import { useStore } from 'vuex'
 import './index.scss'
@@ -63,16 +63,15 @@ export default defineComponent({
 		const user = toRaw(allUser.value)
 
 		function button(ButtonType: string, scope: any) {
-			const index: number = scope.$index
-			const { skuId, buyNumber, buyDate, taskType } = toRaw(scope.row)
-
-			// check({
-			// 	condition: ButtonType === '开始抢购' && allUser.value.length <= 0,
-			// 	message: '还没有添加账号，添加账号后再进行抢购...'
-			// })
+			const index: number = scope.index
+			const { skuId, buyNumber, buyDate, taskType } = toRaw(scope.record)
 
 			switch (ButtonType) {
 				case '开始抢购':
+					check({
+						express: ButtonType === '开始抢购' && allUser.value.length <= 0,
+						message: '还没有添加账号，添加账号后再进行抢购...'
+					})
 					cycleUser(user, startGrab, skuId, buyNumber, taskType, buyDate)
 
 					// ElNotification({ type: 'success', title: '成功', message: tip[taskType] })
@@ -139,7 +138,7 @@ export default defineComponent({
 		const content = {
 			name: ({ text }: any) => <a>{text}</a>,
 			customTitle: () => <span>标题</span>,
-			img: ({ text }: any) => <img class="shop-img" src={text}></img>,
+			img: ({ text }: any) => <img class="shop-img" src={text} alt="" />,
 			action: (scope: any) => (
 				<div>
 					<a onClick={button.bind(this, '开始抢购', scope)}>开始抢购</a>

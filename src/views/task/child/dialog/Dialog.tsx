@@ -1,20 +1,10 @@
 import { check } from 'common/utils'
-import { CheckContent } from 'types/common'
-import { defineComponent, defineEmits, isReactive, reactive, ref, toRaw, toRefs, watch } from 'vue'
-// import { ElMessageBox } from 'element-plus'
+import { defineComponent, reactive, toRaw, watch } from 'vue'
 import { getItemInfo } from 'api/task'
-import { getShopPrice, getShopStore } from 'api/shop'
-import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+import { Form } from 'ant-design-vue'
 
-interface DialogInfo {
-	taskType: string
-	buyDate: string
-	skuId: string
-	address: string
-	buyNumber: number
-}
-
+const useForm = Form.useForm
 const typeOption = reactive([
 	{
 		value: 'Spike',
@@ -39,10 +29,11 @@ export default defineComponent({
 		const store = useStore()
 		watch(
 			() => props.isShow,
-			(value, prevCount) => {}
+			(value, prevCount) => {
+				resetFields()
+			}
 		)
 
-		const formRef = ref()
 		let form = reactive({
 			taskType: 'Spike',
 			buyDate: '',
@@ -50,6 +41,8 @@ export default defineComponent({
 			address: '',
 			buyNumber: 1
 		})
+		const rulesRef = reactive({})
+		const { resetFields } = useForm(form, rulesRef)
 
 		async function operate(v: string) {
 			const rawForm = toRaw(form)
@@ -73,8 +66,7 @@ export default defineComponent({
 		return {
 			operate,
 			form,
-			typeOption,
-			formRef
+			typeOption
 		}
 	},
 	render(createElement: any) {
@@ -105,7 +97,11 @@ export default defineComponent({
 						</a-form-item>
 
 						<a-form-item label="抢购时间">
-							<a-date-picker v-model={[form.buyDate, 'value']} />
+							<a-date-picker
+								v-model={[form.buyDate, 'value']}
+								showTime={{ format: 'YYYY-MM-DD HH:mm:ss' }}
+								valueFormat="YYYY-MM-DD HH:mm:ss"
+							/>
 						</a-form-item>
 
 						<a-form-item label="商品ID">
