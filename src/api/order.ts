@@ -10,7 +10,7 @@ import { ContentType, request, UserAgent } from 'api/request'
 //   showPurchaseList(result.purchaseSkuInfoListVO,'抱歉，以下商品为限购商品，请返回购物车修改 ');
 // }
 // 提交订单（当前购物车内所有商品）
-async function orderSubmit(Cookie: string) {
+export async function orderSubmit(Cookie: string) {
 	// 去结算
 	await request({
 		url: `http://trade.jd.com/shopping/order/getOrderInfo.action`,

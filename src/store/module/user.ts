@@ -15,21 +15,17 @@ export default {
 	},
 
 	mutations: {
-		SAVE_OR_UPDATE(state: State, { pinId, name, cookie, isLogin, isPlusMember }: UserInfo) {
-			state.account.findIndex((i: any) => {
-				if (i.name === name) {
+		SAVE_OR_UPDATE(state: State, userinfo: UserInfo) {
+			const index = state.account.findIndex((i: any) => {
+				if (i.name === userinfo.name) {
 					notification['error']({ message: `账号已经添加，请不要重复添加同一账号` })
-				} else {
-					state.account.push({
-						pinId,
-						name,
-						cookie,
-						isLogin,
-						isPlusMember
-					})
-					notification['success']({ message: '账号已添加' })
 				}
 			})
+
+			if (index === -1) {
+				state.account.push(userinfo)
+				notification['success']({ message: '账号已添加' })
+			}
 		},
 
 		REMOVE_All(state: State) {

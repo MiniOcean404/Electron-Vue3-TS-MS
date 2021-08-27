@@ -3,6 +3,7 @@ import { useStore } from 'vuex'
 import TaskButton from 'views/task/task-button/TaskButton.tsx'
 import TaskTable from 'views/task/task-table/TaskTable.tsx'
 import TaskDialog from 'views/task/dialog/Dialog.tsx'
+import { clearAllTime } from 'common/utils'
 
 export default defineComponent({
 	name: 'Task',
@@ -14,6 +15,7 @@ export default defineComponent({
 	setup(props, ctx) {
 		const store = useStore()
 		const taskInfo = ref(computed(() => store.getters['task/taskInfo']))
+		const times = computed(() => store.getters['timer/times'])
 		const isShow = ref<boolean>(false)
 
 		function clickButton(v: string) {
@@ -25,6 +27,8 @@ export default defineComponent({
 					store.commit('task/REMOVE_ALL')
 					break
 				case '停止所有任务':
+					clearAllTime(times.value)
+					store.commit('timer/REMOVE_ALL')
 					break
 			}
 		}

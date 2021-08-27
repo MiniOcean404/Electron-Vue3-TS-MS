@@ -21,7 +21,7 @@ export default defineComponent({
 						添加任务
 					</a-button>
 					<a-button class="task-item-button" type="primary" onClick={$emit.bind(this, 'clickButton', '删除所有任务')}>
-						添加任务
+						删除所有任务
 					</a-button>
 					<a-button class="task-item-button" type="primary" onClick={stopAllTask}>
 						停止所有任务

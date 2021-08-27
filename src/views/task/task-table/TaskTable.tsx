@@ -1,49 +1,17 @@
 import { addGoodsToCart } from 'api/card'
-import { computed, defineComponent, toRaw } from 'vue'
-import { check, cycleUser } from 'common/utils'
+import { computed, defineComponent, reactive, toRaw } from 'vue'
+import { check, clearAllTime, cycleUser } from 'common/utils'
 import { UserInfo } from 'types/store'
 import { useStore } from 'vuex'
 import './index.scss'
 import { notification } from 'ant-design-vue'
 import moment from 'moment'
+import { columns, actions } from './table-config'
 
 enum tip {
 	Spike = '该商品是预约抢购商品，需要自行加入到购物车，并确保购物车里不含其他可提交商品',
 	Reservation = '该商品是秒杀商品，会自动提交订单'
 }
-
-const actions = new Map([
-	['Spike', 'orderSubmit'],
-	['Reservation', 'killOrderSubmit']
-])
-
-const columns = [
-	{
-		title: '商品图', //标题
-		dataIndex: 'imageSrc', //要取值的属性名
-		slots: { customRender: 'img' } //自定义复杂slot，带scope
-	},
-	{
-		dataIndex: 'name',
-		key: 'name',
-		slots: { customRender: 'name', title: 'customTitle' }
-	},
-	{
-		title: 'skuId',
-		dataIndex: 'skuId',
-		key: 'skuId'
-	},
-	{
-		title: '时间',
-		dataIndex: 'buyDate',
-		key: 'buyDate'
-	},
-	{
-		title: '行为',
-		width: 150,
-		slots: { customRender: 'action' }
-	}
-]
 
 export default defineComponent({
 	name: 'TaskTable',
@@ -53,15 +21,12 @@ export default defineComponent({
 			default: []
 		}
 	},
-	data() {
-		return {
-			times: []
-		}
-	},
 	setup(props: any, context: any) {
 		const store = useStore()
 		const allUser = computed(() => store.getters['user/userInfo'])
+		const times = computed(() => store.getters['timer/times'])
 		const user = toRaw(allUser.value)
+		// const times = reactive<Array<object>>([])
 
 		function button(ButtonType: string, scope: any) {
 			check(undefined, [
@@ -73,12 +38,11 @@ export default defineComponent({
 			])
 
 			const index: number = scope.index
-			const { skuId, buyNumber, buyDate, taskType } = toRaw(scope.record)
+			const { skuId, buyNumber, buyDate, taskType, timing } = toRaw(scope.record)
 
 			switch (ButtonType) {
 				case '开始抢购':
-					cycleUser(user, startGrab, skuId, buyNumber, taskType, buyDate)
-					// ElNotification({ type: 'success', title: '成功', message: tip[taskType] })
+					cycleUser(user, startGrab, skuId, buyNumber, taskType, buyDate, timing)
 					break
 				case '删除':
 					store.commit('task/REMOVE_SOME_ONE', index)
@@ -87,43 +51,46 @@ export default defineComponent({
 			}
 		}
 
-		function startGrab(u: UserInfo, ...arg: [string, number, string, string]) {
-			const [skuId, buyNumber, taskType, buyDate] = arg
-			if (moment(buyDate).isAfter(Date.now())) {
-				createOrder(u, skuId, buyNumber, taskType)
-			} else {
-				notification['info']({ message: `账号${u.name}抢购中，还未到抢购时间` })
+		async function startGrab(u: UserInfo, ...arg: [string, number, string, string, number]) {
+			const isAdd = times.value?.findIndex((i: any) => {
+				return i.pinId === u.pinId
+			})
+
+			const [skuId, buyNumber, taskType, buyDate, timing] = arg
+
+			if (!moment(Date.now()).isBefore(buyDate)) {
+				// * 超过购买时间
+				await createOrder(u, skuId, buyNumber, taskType)
+			} else if (times.value?.length > 0 && isAdd > -1) {
+				// * 已经添加了定时器
+				notification['info']({ message: `账号${u.name}的任务进行中，还未到抢购时间` })
+			} else if (moment(Date.now()).isBefore(buyDate) && isAdd === -1) {
+				// * 购买时间还没到
+				let taskTiming = setInterval(async () => {
+					await createOrder(u, skuId, buyNumber, taskType)
+				}, timing)
+
+				await store.dispatch('timer/saveTime', {
+					pinId: u.pinId,
+					skuId,
+					taskTiming
+				})
 			}
-
-			// let taskTiming = setInterval(() => {
-			// }, 10000)
-
-			// this.times.push({
-			//   pinId: u.pinId,
-			//   skuId,
-			//   // taskTiming
-			// })
 		}
 
 		async function createOrder(u: UserInfo, skuId: string, buyNumber: number, taskType: string) {
-			addGoodsToCart(u.cookie, skuId, buyNumber).then((res: any) => {
-				console.log(res, '添加购物车接口返回')
-			})
-
-			const api: string | undefined = actions.get(taskType)
+			await addGoodsToCart(u.cookie, skuId, buyNumber)
+			const api: Function | undefined = actions.get(taskType)
 			let res: any
 			if (api !== undefined) {
+				res = await api(u.cookie)
 			}
 
 			if (res && res.success) {
-				// this.stopTaskByAccount(u.pinId, skuId)
-
 				notification['success']({ message: `恭喜,账号「${u.name}」已抢到,此账号不再参与本轮抢购~` })
 			} else if (res && res.resultCode === 600158) {
-				this.stopTaskBySku(skuId)
-
-				notification['info']({ message: `商品库存已空，无法继续抢购,已清除当前任务相关的定时器` })
-			} else {
+				clearAllTime(times.value)
+				store.commit('timer/REMOVE_ALL')
 				notification['info']({ message: `商品库存已空，无法继续抢购,已清除当前任务相关的定时器` })
 			}
 		}

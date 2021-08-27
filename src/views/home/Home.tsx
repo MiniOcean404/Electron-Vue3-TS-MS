@@ -44,7 +44,7 @@ export default defineComponent({
 					isPlusMember: res.data === true ? '是' : '否'
 				}
 
-				store.dispatch('user/saveAccount', info).then((r) => console.log(r))
+				store.dispatch('user/saveAccount', info).then((r) => null)
 			})
 		}
 

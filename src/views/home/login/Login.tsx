@@ -21,8 +21,6 @@ export default defineComponent({
 					.get({ domain: '.jd.com' })
 					.then((cookies: object[]) => {
 						const cookie = cookies.reduce((str: string, cookie: any) => {
-							// console.log('%c[打印] :', 'color: #bf2c9f; background: pink; font-size: 13px;', )
-
 							const { name, value } = cookie
 							str += `${name}=${value};`
 							return str

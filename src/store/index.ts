@@ -8,6 +8,7 @@ export interface State {
 	account: object[]
 	shopInfo: object[]
 	taskInfo: object[]
+	timer: object[]
 }
 
 // 定义 injection key

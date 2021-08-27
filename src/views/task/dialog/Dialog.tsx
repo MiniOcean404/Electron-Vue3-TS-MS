@@ -7,12 +7,12 @@ import { Form } from 'ant-design-vue'
 const useForm = Form.useForm
 const typeOption = reactive([
 	{
-		value: 'Spike',
-		label: '预约抢购'
-	},
-	{
 		value: 'Reservation',
 		label: '秒杀商品'
+	},
+	{
+		value: 'Spike',
+		label: '预约抢购'
 	}
 ])
 
@@ -35,10 +35,10 @@ export default defineComponent({
 		)
 
 		let form = reactive({
-			taskType: 'Spike',
+			taskType: 'Reservation',
 			buyDate: '',
 			skuId: '',
-			address: '',
+			timing: 1000,
 			buyNumber: 1
 		})
 		const rulesRef = reactive({})
@@ -62,7 +62,7 @@ export default defineComponent({
 					])
 
 					// 获取商品信息DOM
-					const res = await getItemInfo(rawForm.skuId)
+					const res = await getItemInfo(rawForm.skuId.trim())
 					const taskInfo = Object.assign({}, rawForm, res.data)
 					store.commit('task/SAVE_TASK_INFO', taskInfo)
 					break
@@ -118,8 +118,8 @@ export default defineComponent({
 							<a-input v-model={[form.skuId, 'value']} />
 						</a-form-item>
 
-						<a-form-item label="地址信息">
-							<a-input v-model={[form.address, 'value']} />
+						<a-form-item label="定时器速度（毫秒）">
+							<a-input-number id="inputNumber" v-model={[form.timing, 'value']} min={500} />
 						</a-form-item>
 
 						<a-form-item label="购买数量">

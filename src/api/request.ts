@@ -18,7 +18,7 @@ export const request = axios.create({
 	// 最多转发数，用于node.js
 	maxRedirects: 5,
 	// 最大响应数据大小
-	maxContentLength: 200000,
+	maxContentLength: 2000000,
 	headers: {
 		'Content-Type': 'application/json;charset=UTF-8'
 	},

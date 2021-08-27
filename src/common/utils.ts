@@ -25,3 +25,9 @@ export function cycleUser(user: object[], fn: Function, ...args: object[]) {
 		fn(u, ...args)
 	})
 }
+
+export function clearAllTime(times: Array<{ pinId: string; skuId: string; taskTiming: NodeJS.Timer }>) {
+	times.forEach((i) => {
+		clearInterval(i.taskTiming)
+	})
+}
