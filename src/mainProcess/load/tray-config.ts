@@ -1,10 +1,9 @@
 import { Tray, Menu, app } from 'electron'
 import path from 'path'
-const iconPath = path.join(__dirname, '../src/assets/vue3-logo.ico')
-console.log(iconPath, 'iconpath')
+const iconPath = path.join(__dirname, '../build/icons/favicon.ico')
 
-let tray
-export function createTray(win) {
+let tray: any
+export function createTray(win: any) {
 	tray = new Tray(iconPath) //实例化一个tray对象，构造函数的唯一参数是需要在托盘中显示的图标url
 
 	tray.setToolTip('抢购') //鼠标移到托盘中应用程序的图标上时，显示的文本

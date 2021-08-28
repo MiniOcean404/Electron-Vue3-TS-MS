@@ -1,6 +1,7 @@
 {
-  "name": "panicbuying",
-  "version": "0.1.0",
+  "name": "ms",
+  "version": "1.0.0",
+  "author": "miniocean404",
   "private": true,
   "scripts": {
     "electron:serve": "vue-cli-service electron:serve",
@@ -8,7 +9,8 @@
     "postinstall": "electron-builder install-app-deps",
     "postuninstall": "electron-builder install-app-deps",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "build-icon": "electron-icon-builder --input=./public/icon.png --output=build --flatten"
   },
   "main": "background.js",
   "dependencies": {
@@ -42,54 +44,5 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ],
-  "build": {
-    "productName": "抢购",
-    "appId": "ms",
-    "directories": {
-      "buildResources": "resources",
-      "output": "dist/"
-    },
-    "files": [
-      "dist/electron",
-      "node_modules/",
-      "package.json"
-    ],
-    "mac": {
-      "target": "dmg",
-      "icon": "icon.ico"
-    },
-    "win": {
-      "target": "nsis",
-      "icon": "icon.ico"
-    },
-    "dmg": {
-      "artifactName": "appDemo.dmg",
-      "contents": [
-        {
-          "type": "link",
-          "path": "/Applications",
-          "x": 410,
-          "y": 150
-        },
-        {
-          "type": "file",
-          "x": 130,
-          "y": 150
-        }
-      ]
-    },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "allowElevation": true,
-      "installerIcon": "./build/icons/aaa.ico",
-      "uninstallerIcon": "./build/icons/bbb.ico",
-      "installerHeaderIcon": "./build/icons/aaa.ico",
-      "createDesktopShortcut": true,
-      "createStartMenuShortcut": true,
-      "shortcutName": "xxxx",
-      "include": "build/script/installer.nsh"
-    }
-  }
+  ]
 }
