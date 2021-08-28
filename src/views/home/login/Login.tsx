@@ -1,6 +1,7 @@
 import { defineComponent, defineEmits } from 'vue'
 import './index.scss'
 import { notification } from 'ant-design-vue'
+import * as electron from 'electron'
 const loginUrl = 'https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd.com%2F'
 
 export default defineComponent({

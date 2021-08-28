@@ -66,7 +66,7 @@ export default defineComponent({
 
 		return (
 			<div>
-				<a-table columns={columns} data-source={tableData} rowKey="pinId" v-slots={content}></a-table>
+				<a-table columns={columns} data-source={tableData} rowKey="pinId" v-slots={content} />
 			</div>
 		)
 	}

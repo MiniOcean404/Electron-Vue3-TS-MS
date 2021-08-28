@@ -88,28 +88,45 @@ module.exports = {
 				: ''
 		}
 	},
-	// electron vue3.0 构建打包
+	//  * 由于我们这里使用的是Vue CLI Plugin Electron Builder，打包的配置需要放在vue.config.js中,否则使用默认package.json文件中
 	pluginOptions: {
 		electronBuilder: {
 			nodeIntegration: true,
+			productName: '秒杀',
+			appId: 'ms',
+			copyright: 'Copyright © 2021 miniOcean404',
+			directories: {
+				output: 'dist/'
+			},
+			// extraResources: {
+			// 	//打包后拷贝静态文件到指定位置, 我通常放一些软件的配置文件和资源文件等等
+			// "from": "./extraResources/",
+			// "to": "extraResources"
+			// },
+			// files: [
+			// 	//打包时候包含的包文件
+			// 	'**/*'
+			// ],
+
 			builderOptions: {
+				win: {
+					target: ['nsis'], //['msi', 'nsis']
+					icon: 'build/icons/favicon.ico'
+				},
 				nsis: {
-					oneClick: false,
+					oneClick: false, // 是否一键安装
 					language: '2052',
 					perMachine: true,
-					allowToChangeInstallationDirectory: true,
-					allowElevation: true,
-					installerIcon: './build/icons/favicon.ico',
-					uninstallerIcon: './build/icons/favicon.ico',
-					installerHeaderIcon: './build/icons/favicon.ico',
-					createDesktopShortcut: true,
-					createStartMenuShortcut: true,
-					shortcutName: '抢购'
-					// include: 'build/script/installer.nsh'
-				},
-				win: {
-					target: ['msi', 'nsis'],
-					icon: 'build/icons/favicon.ico'
+					allowToChangeInstallationDirectory: true, // 允许修改安装目录
+					allowElevation: true, // 允许请求提升。 如果为false，则用户必须使用提升的权限重新启动安装程序。
+					installerIcon: './build/icons/favicon.ico', // 安装图标
+					uninstallerIcon: './build/icons/favicon.ico', //卸载图标
+					installerHeaderIcon: './build/icons/favicon.ico', // 安装时头部图标
+					createDesktopShortcut: true, // 创建桌面图标
+					createStartMenuShortcut: true, // 创建开始菜单图标
+					shortcutName: '抢购' // 快捷方式名称
+					// include: 'build/script/installer.nsh', // 包含的自定义nsis脚本 这个对于构建需求严格得安装过程相当有用。
+					// script: 'build/script/installer.nsh' // NSIS脚本的路径，用于自定义安装程序。 默认为build / installer.nsi
 				},
 				mac: {
 					target: ['dmg', 'zip'],
@@ -137,12 +154,18 @@ module.exports = {
 						width: 540,
 						height: 380
 					}
-				},
-				productName: '秒杀'
+				}
 			}
+			// publish: [
+			// 	{
+			// 		provider: 'github', // 服务器提供商 也可以是GitHub等等
+			// 		url: 'http://xxxxx/' // 服务器地址
+			// 	}
+			// ],
 		}
 	}
-	// 默认打包方式package.json
+
+	// * 默认打包方式package.json
 	// "build": {
 	//   "productName": "抢购",
 	//   "appId": "ms",

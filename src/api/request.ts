@@ -1,11 +1,12 @@
-const axios = window.require('axios')
+import axios from 'axios'
 import { AxiosResponse, AxiosRequestConfig, Canceler } from 'axios'
 import Qs from 'qs'
 
 export const UserAgent =
 	'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36'
 export const ContentType = 'application/x-www-form-urlencoded'
-const http = window.require('axios/lib/adapters/http.js')
+// @ts-ignore
+import http from 'axios/lib/adapters/http.js'
 
 export const request = axios.create({
 	baseURL: '',
