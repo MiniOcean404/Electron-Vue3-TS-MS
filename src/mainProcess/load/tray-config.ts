@@ -1,6 +1,6 @@
 import { Tray, Menu, app } from 'electron'
 import path from 'path'
-const iconPath = path.join(__dirname, '../build/icons/favicon.ico')
+const iconPath = path.join(__dirname, 'build/icons/favicon.ico')
 
 let tray: any
 export function createTray(win: any) {

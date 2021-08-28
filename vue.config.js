@@ -95,19 +95,28 @@ module.exports = {
 			productName: '秒杀',
 			appId: 'ms',
 			copyright: 'Copyright © 2021 miniOcean404',
+			compression: 'store', // "store" | "normal"| "maximum" 打包压缩情况(store 相对较快)，store 39749kb, maximum 39186kb
 			directories: {
 				output: 'dist/'
 			},
-			// extraResources: {
-			// 	//打包后拷贝静态文件到指定位置, 我通常放一些软件的配置文件和资源文件等等
-			// "from": "./extraResources/",
-			// "to": "extraResources"
-			// },
+			extraResources: [
+				{
+					//打包后拷贝静态文件到指定位置
+					from: './build/**',
+					to: './extraResources/**'
+				}
+			],
+			extraFiles: [
+				{
+					//打包后拷贝静态文件到指定位置
+					from: './build/**',
+					to: './extraResources/**'
+				}
+			],
 			// files: [
 			// 	//打包时候包含的包文件
 			// 	'**/*'
 			// ],
-
 			builderOptions: {
 				win: {
 					target: ['nsis'], //['msi', 'nsis']
@@ -116,7 +125,7 @@ module.exports = {
 				nsis: {
 					oneClick: false, // 是否一键安装
 					language: '2052',
-					perMachine: true,
+					perMachine: true, //是否开启安装时权限限制（此电脑或当前用户）true 表示此电脑，false代表当前用户
 					allowToChangeInstallationDirectory: true, // 允许修改安装目录
 					allowElevation: true, // 允许请求提升。 如果为false，则用户必须使用提升的权限重新启动安装程序。
 					installerIcon: './build/icons/favicon.ico', // 安装图标
@@ -125,6 +134,7 @@ module.exports = {
 					createDesktopShortcut: true, // 创建桌面图标
 					createStartMenuShortcut: true, // 创建开始菜单图标
 					shortcutName: '抢购' // 快捷方式名称
+					// "guid": "x", //注册表名字，不推荐修改
 					// include: 'build/script/installer.nsh', // 包含的自定义nsis脚本 这个对于构建需求严格得安装过程相当有用。
 					// script: 'build/script/installer.nsh' // NSIS脚本的路径，用于自定义安装程序。 默认为build / installer.nsi
 				},
