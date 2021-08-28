@@ -104,8 +104,8 @@ module.exports = {
 					installerHeaderIcon: './build/icons/favicon.ico',
 					createDesktopShortcut: true,
 					createStartMenuShortcut: true,
-					shortcutName: '抢购',
-					include: 'build/script/installer.nsh'
+					shortcutName: '抢购'
+					// include: 'build/script/installer.nsh'
 				},
 				win: {
 					target: ['msi', 'nsis'],
