@@ -1,4 +1,5 @@
-import { checkName, CheckCondition, CheckType } from 'types/common'
+import type { checkName, CheckCondition, CheckType } from '@/types/common/utils'
+
 import { notification } from 'ant-design-vue'
 
 export function check(name: checkName, conditionArr: Array<CheckCondition>) {

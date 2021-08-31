@@ -1,48 +1,43 @@
 <template>
-	<a-menu style="width: 256px" mode="vertical" @click="handleClick">
-		<a-menu-item key="home">登录</a-menu-item>
-		<a-menu-item key="task">秒杀</a-menu-item>
-		<a-menu-item key="jdTime">服务器时间</a-menu-item>
+  <a-menu style="width: 256px" mode="vertical" @click="handleClick">
+    <a-menu-item key="home">登录</a-menu-item>
+    <a-menu-item key="task">秒杀</a-menu-item>
+    <a-menu-item key="jdTime">服务器时间</a-menu-item>
 
-		<!--		<a-sub-menu key="home" title="登录">-->
-		<!--			<a-menu-item key="3">儿子</a-menu-item>-->
+    <!--		<a-sub-menu key="home" title="登录">-->
+    <!--			<a-menu-item key="3">儿子</a-menu-item>-->
 
-		<!--			<a-sub-menu key="sub1-2" title="子菜单">-->
-		<!--				<a-menu-item key="5">孙子菜单选项</a-menu-item>-->
-		<!--			</a-sub-menu>-->
-		<!--		</a-sub-menu>-->
-	</a-menu>
+    <!--			<a-sub-menu key="sub1-2" title="子菜单">-->
+    <!--				<a-menu-item key="5">孙子菜单选项</a-menu-item>-->
+    <!--			</a-sub-menu>-->
+    <!--		</a-sub-menu>-->
+  </a-menu>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs, VNodeChild } from 'vue'
 import { useRouter } from 'vue-router'
+import { MenuInfo } from 'types/common/menu';
 
-interface MenuInfo {
-	key: string
-	keyPath: string[]
-	item: VNodeChild
-	domEvent: MouseEvent
-}
-
+// defineComponent 可以为里面的内容进行类型推断，除了vue2写法
 export default defineComponent({
-	setup() {
-		const router = useRouter()
+  setup() {
+    const router = useRouter()
 
-		const handleClick = (e: MenuInfo) => {
-			router.push({ name: e.key })
-		}
+    const handleClick = (e: MenuInfo) => {
+      router.push({ name: e.key })
+    }
 
-		return {
-			handleClick
-		}
-	}
+    return {
+      handleClick
+    }
+  }
 })
 </script>
 
 <style lang="scss" scoped>
 .side {
-	min-width: 200px;
-	height: 100%;
+  min-width: 200px;
+  height: 100%;
 }
 </style>
