@@ -1,6 +1,7 @@
 import { defineComponent, ref, onMounted, onBeforeUnmount } from 'vue'
 import { formatDate } from 'common/date'
 
+//! vue 中 jsx 语法问题，导致不能点击
 export default defineComponent({
 	name: 'server-time',
 	setup(props, context) {
@@ -11,7 +12,8 @@ export default defineComponent({
 		let TaoBaoTime = ref('')
 		let JDTiming: NodeJS.Timeout
 		let TaoBaoTiming: NodeJS.Timeout
-		let currentTab = 'jd'
+		let currentTab = ref('jd')
+		const activeKey = ref('1')
 
 		onMounted(() => {
 			// JDTiming = computeDate(getJDServerTime, jdTimeResult, JDTime, 15)
@@ -23,12 +25,14 @@ export default defineComponent({
 		})
 
 		function tabClick(tab: any, event: any) {
-			switch (tab.paneName) {
+			switch (tab) {
 				case 'jd':
+					// currentTab.value = 'jd'
 					// JDTiming = computeDate(getJDServerTime, jdTimeResult, JDTime, 1000)
 					clearTime(TaoBaoTiming)
 					break
 				case 'tb':
+					// currentTab.value = 'tb'
 					// TaoBaoTiming = computeDate(getTaoBaoServerTime, tbTimeResult, TaoBaoTime, 1000)
 					clearTime(JDTiming)
 					break
@@ -62,15 +66,15 @@ export default defineComponent({
 			TaoBaoTime,
 			JDTime,
 			tabClick,
-			currentTab
+			currentTab,
+			activeKey,
 		}
 	},
 	render() {
-		const { JDTime, TaoBaoTime, tabClick, currentTab } = this
-
+		const { JDTime, TaoBaoTime, tabClick, currentTab, activeKey } = this
 		return (
-			<div>
-				<a-tabs type="card" v-model={[currentTab, 'activeKey']} onTabClick={tabClick}>
+			<>
+				<a-tabs type="card" v-model:activeKey={currentTab} onTabClick={tabClick}>
 					<a-tab-pane key="jd" tab="京东">
 						{{ JDTime }}
 					</a-tab-pane>
@@ -78,7 +82,7 @@ export default defineComponent({
 						{{ TaoBaoTime }}
 					</a-tab-pane>
 				</a-tabs>
-			</div>
+			</>
 		)
-	}
+	},
 })

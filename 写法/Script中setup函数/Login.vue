@@ -7,9 +7,7 @@ import { defineEmits, onBeforeMount } from 'vue'
 import { useStore } from 'vuex'
 // import { ElNotification } from 'element-plus'
 
-const {
-	remote: { BrowserWindow }
-} = window.require('electron')
+const { BrowserWindow } = window.require('electron')
 
 const store = useStore()
 const emit = defineEmits<{

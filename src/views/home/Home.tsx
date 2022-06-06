@@ -1,10 +1,10 @@
-import { defineComponent, ref, computed, toRaw } from 'vue'
-import { useStore } from 'vuex'
-import Login from 'views/home/login/Login.tsx'
-import Table from 'views/home/user-table/Table.tsx'
+import { notification } from 'ant-design-vue'
 import { checkUser } from 'api/user'
 import { cycleUser } from 'common/utils'
-import { notification } from 'ant-design-vue'
+import Login from 'views/home/login/Login'
+import Table from 'views/home/user-table/Table'
+import { computed, defineComponent, ref } from 'vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
 	name: 'Home',
@@ -41,7 +41,7 @@ export default defineComponent({
 					cookie,
 					name,
 					isLogin: '是',
-					isPlusMember: res.data === true ? '是' : '否'
+					isPlusMember: res.data === true ? '是' : '否',
 				}
 
 				store.dispatch('user/saveAccount', info).then((r) => null)
@@ -51,7 +51,7 @@ export default defineComponent({
 		return {
 			Cookie,
 			alreadyLogin,
-			allUser
+			allUser,
 		}
 	},
 	render() {
@@ -62,5 +62,5 @@ export default defineComponent({
 				<Table tableData={allUser} />
 			</div>
 		)
-	}
+	},
 })

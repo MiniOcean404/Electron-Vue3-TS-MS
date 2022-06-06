@@ -12,7 +12,7 @@ module.exports = {
 		port: 3000,
 		open: false,
 		https: false,
-		host: '0.0.0.0'
+		host: '0.0.0.0',
 		// copy:true
 	},
 	publicPath: './',
@@ -20,7 +20,7 @@ module.exports = {
 	productionSourceMap: false,
 
 	configureWebpack: {
-		devtool: 'source-map'
+		devtool: 'source-map',
 	},
 
 	chainWebpack: (config) => {
@@ -33,12 +33,7 @@ module.exports = {
 			.set('components', resolve('src/components'))
 			.set('types', resolve('src/types'))
 
-		config.resolve.extensions
-			.add('.js')
-			.add('.tsx')
-			.add('.vue')
-			.add('less')
-			.add('sass')
+		config.resolve.extensions.add('.js').add('.tsx').add('.vue').add('less').add('sass')
 
 		if (isNoOnline) {
 			// 打包忽略引入的文件
@@ -48,7 +43,7 @@ module.exports = {
 				vuex: 'Vuex',
 				axios: 'axios',
 				'element-ui': 'ELEMENT',
-				'vue-quill-editor': 'VueQuillEditor'
+				'vue-quill-editor': 'VueQuillEditor',
 			})
 		}
 	},
@@ -56,12 +51,17 @@ module.exports = {
 	css: {
 		extract: process.env.NODE_ENV === 'production', // 是否使用css分离插件 ExtractTextPlugin
 		sourceMap: true, // 开启 CSS source maps?
-		requireModuleExtension: true, // 启用 CSS modules for all css / pre-processor files.
 		loaderOptions: {
 			sass: {
-				additionalData: `@import "~assets/css/_var.scss";`
-			}
-		}
+				additionalData: `@import "~assets/css/_var.scss";`,
+			},
+			css: {
+				// 启用 CSS modules
+				modules: {
+					auto: () => false,
+				},
+			},
+		},
 	},
 
 	pages: {
@@ -74,7 +74,7 @@ module.exports = {
 				? {
 						css: [
 							'https://unpkg.com/element-ui/lib/theme-chalk/index.css',
-							'https://cdn.bootcdn.net/ajax/libs/wangEditor/3.1.1/wangEditor.min.css'
+							'https://cdn.bootcdn.net/ajax/libs/wangEditor/3.1.1/wangEditor.min.css',
 						],
 						js: [
 							'https://cdn.bootcdn.net/ajax/libs/vue-router/3.5.1/vue-router.min.js',
@@ -82,11 +82,11 @@ module.exports = {
 							'https://cdn.bootcdn.net/ajax/libs/vuex/3.6.2/vuex.min.js',
 							'https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js',
 							'https://unpkg.com/element-ui/lib/index.js',
-							'https://cdn.bootcdn.net/ajax/libs/wangEditor/3.1.1/wangEditor.min.js'
-						]
+							'https://cdn.bootcdn.net/ajax/libs/wangEditor/3.1.1/wangEditor.min.js',
+						],
 				  }
-				: ''
-		}
+				: '',
+		},
 	},
 	//  * 由于我们这里使用的是Vue CLI Plugin Electron Builder，打包的配置需要放在vue.config.js中,否则使用默认package.json文件中
 	pluginOptions: {
@@ -97,21 +97,21 @@ module.exports = {
 			copyright: 'Copyright © 2021 miniOcean404',
 			compression: 'store', // "store" | "normal"| "maximum" 打包压缩情况(store 相对较快)，store 39749kb, maximum 39186kb
 			directories: {
-				output: 'dist/'
+				output: 'dist/',
 			},
 			extraResources: [
 				{
 					//打包后拷贝静态文件到指定位置
 					from: './build/**',
-					to: './extraResources/**'
-				}
+					to: './extraResources/**',
+				},
 			],
 			extraFiles: [
 				{
 					//打包后拷贝静态文件到指定位置
 					from: './build/**',
-					to: './extraResources/**'
-				}
+					to: './extraResources/**',
+				},
 			],
 			// files: [
 			// 	//打包时候包含的包文件
@@ -120,7 +120,7 @@ module.exports = {
 			builderOptions: {
 				win: {
 					target: ['nsis'], //['msi', 'nsis']
-					icon: 'build/icons/favicon.ico'
+					icon: 'build/icons/favicon.ico',
 				},
 				nsis: {
 					oneClick: false, // 是否一键安装
@@ -133,14 +133,14 @@ module.exports = {
 					installerHeaderIcon: './build/icons/favicon.ico', // 安装时头部图标
 					createDesktopShortcut: true, // 创建桌面图标
 					createStartMenuShortcut: true, // 创建开始菜单图标
-					shortcutName: '抢购' // 快捷方式名称
+					shortcutName: '抢购', // 快捷方式名称
 					// "guid": "x", //注册表名字，不推荐修改
 					// include: 'build/script/installer.nsh', // 包含的自定义nsis脚本 这个对于构建需求严格得安装过程相当有用。
 					// script: 'build/script/installer.nsh' // NSIS脚本的路径，用于自定义安装程序。 默认为build / installer.nsi
 				},
 				mac: {
 					target: ['dmg', 'zip'],
-					category: 'public.app-category.utilities'
+					category: 'public.app-category.utilities',
 				},
 				dmg: {
 					background: 'build/背景.jpg',
@@ -152,28 +152,28 @@ module.exports = {
 							x: 380,
 							y: 180,
 							type: 'link',
-							path: '/Applications'
+							path: '/Applications',
 						},
 						{
 							x: 130,
 							y: 180,
-							type: 'file'
-						}
+							type: 'file',
+						},
 					],
 					window: {
 						width: 540,
-						height: 380
-					}
-				}
-			}
+						height: 380,
+					},
+				},
+			},
 			// publish: [
 			// 	{
 			// 		provider: 'github', // 服务器提供商 也可以是GitHub等等
 			// 		url: 'http://xxxxx/' // 服务器地址
 			// 	}
 			// ],
-		}
-	}
+		},
+	},
 
 	// * 默认打包方式package.json
 	// "build": {

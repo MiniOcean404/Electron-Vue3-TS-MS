@@ -29,12 +29,15 @@ onBeforeUnmount(() => {
 })
 
 function tabClick(tab, event) {
+	console.log(tab)
 	switch (tab.paneName) {
 		case 'jd':
+			currentTab = 'jd'
 			// JDTiming = computeDate(getJDServerTime, jdTimeResult, JDTime, 1000)
 			clearTime(TaoBaoTiming)
 			break
 		case 'tb':
+			currentTab = 'tb'
 			// TaoBaoTiming = computeDate(getTaoBaoServerTime, tbTimeResult, TaoBaoTime, 1000)
 			clearTime(JDTiming)
 			break

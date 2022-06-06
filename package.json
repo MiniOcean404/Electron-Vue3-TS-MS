@@ -1,49 +1,54 @@
 {
-  "name": "ms",
-  "version": "1.0.0",
-  "author": "miniocean404",
-  "private": true,
-  "scripts": {
-    "electron:serve": "vue-cli-service electron:serve",
-    "electron:build": "vue-cli-service electron:build",
-    "postinstall": "electron-builder install-app-deps",
-    "postuninstall": "electron-builder install-app-deps",
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "build-icon": "electron-icon-builder --input=./public/icon.png --output=build --flatten"
-  },
-  "main": "background.js",
-  "dependencies": {
-    "core-js": "^3.6.5",
-    "vue": "^3.2.2",
-    "vue-class-component": "^8.0.0-0",
-    "vue-router": "^4.0.0-0",
-    "vuex": "^4.0.0-0",
-    "ant-design-vue": "^2.2.6",
-    "axios": "^0.21.1",
-    "normalize.css": "^8.0.1",
-    "vuex-persistedstate": "^4.0.0-beta.3"
-  },
-  "devDependencies": {
-    "@types/electron-devtools-installer": "^2.2.0",
-    "@vue/babel-plugin-jsx": "^1.0.6",
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-router": "~4.5.0",
-    "@vue/cli-plugin-typescript": "~4.5.0",
-    "@vue/cli-plugin-vuex": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.2.2",
-    "electron": "^13.0.0",
-    "electron-devtools-installer": "^3.1.0",
-    "node-sass": "^6.0.1",
-    "sass-loader": "^10.2.0",
-    "typescript": "~4.1.5",
-    "vue-cli-plugin-electron-builder": "~2.1.1"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ],
-  "electronDownload": { "mirror": "https://npm.taobao.org/mirrors/electron/" }
+	"name": "ms",
+	"version": "1.0.0",
+	"author": "miniocean404",
+	"private": true,
+	"scripts": {
+		"electron:serve": "vue-cli-service electron:serve",
+		"electron:build": "vue-cli-service electron:build",
+		"postinstall": "electron-builder install-app-deps",
+		"postuninstall": "electron-builder install-app-deps",
+		"serve": "vue-cli-service serve",
+		"build": "vue-cli-service build",
+		"build-icon": "electron-icon-builder --input=./public/icon.png --output=build --flatten"
+	},
+	"main": "background.js",
+	"dependencies": {
+		"@electron/remote": "^2.0.8",
+		"ant-design-vue": "^3.2.5",
+		"axios": "^0.27.2",
+		"core-js": "^3.22.8",
+		"moment": "^2.29.3",
+		"normalize.css": "^8.0.1",
+		"vue": "^3.2.36",
+		"vue-class-component": "^8.0.0-0",
+		"vue-router": "^4.0.15",
+		"vuex": "^4.0.0-0",
+		"vuex-persistedstate": "^4.1.0"
+	},
+	"devDependencies": {
+		"@types/electron-devtools-installer": "^2.2.2",
+		"@vue/babel-plugin-jsx": "^1.1.1",
+		"@vue/cli-plugin-babel": "~5.0.4",
+		"@vue/cli-plugin-router": "~5.0.4",
+		"@vue/cli-plugin-typescript": "~5.0.4",
+		"@vue/cli-plugin-vuex": "~5.0.4",
+		"@vue/cli-service": "~5.0.4",
+		"@vue/compiler-sfc": "^3.2.36",
+		"electron": "^19.0.3",
+		"electron-devtools-installer": "^3.1.0",
+		"node-sass": "^7.0.1",
+		"sass-loader": "^13.0.0",
+		"ts-loader": "8.2.0",
+		"typescript": "~4.7.3",
+		"vue-cli-plugin-electron-builder": "~2.1.1"
+	},
+	"browserslist": [
+		"> 1%",
+		"last 2 versions",
+		"not dead"
+	],
+	"electronDownload": {
+		"mirror": "https://npm.taobao.org/mirrors/electron/"
+	}
 }

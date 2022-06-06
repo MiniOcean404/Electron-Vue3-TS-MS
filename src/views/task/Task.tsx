@@ -1,16 +1,16 @@
+import { clearAllTime } from 'common/utils'
+import TaskDialog from 'views/task/dialog/Dialog'
+import TaskButton from 'views/task/task-button/TaskButton'
+import TaskTable from 'views/task/task-table/TaskTable'
 import { computed, defineComponent, ref } from 'vue'
 import { useStore } from 'vuex'
-import TaskButton from 'views/task/task-button/TaskButton.tsx'
-import TaskTable from 'views/task/task-table/TaskTable.tsx'
-import TaskDialog from 'views/task/dialog/Dialog.tsx'
-import { clearAllTime } from 'common/utils'
 
 export default defineComponent({
 	name: 'Task',
 	components: {
 		TaskButton,
 		TaskTable,
-		TaskDialog
+		TaskDialog,
 	},
 	setup(props, ctx) {
 		const store = useStore()
@@ -41,5 +41,5 @@ export default defineComponent({
 				<task-dialog v-model={[isShow.value, 'isShow']} />
 			</div>
 		)
-	}
+	},
 })

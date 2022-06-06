@@ -1,16 +1,13 @@
-import { defineComponent, defineEmits } from 'vue'
-import './index.scss'
 import { notification } from 'ant-design-vue'
-import * as electron from 'electron'
+import { defineComponent } from 'vue'
+import './index.scss'
 const loginUrl = 'https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fwww.jd.com%2F'
 
 export default defineComponent({
 	name: 'Login',
 	emits: ['AlreadyLogin'], //setup函数必须声明对应的emit
 	setup(props, context) {
-		const {
-			remote: { BrowserWindow }
-		} = window.require('electron')
+		const { BrowserWindow } = window.require('@electron/remote')
 
 		function loginWindow() {
 			const loginWindow = new BrowserWindow({ width: 1000, height: 800 })
@@ -37,7 +34,7 @@ export default defineComponent({
 		}
 
 		return {
-			loginWindow
+			loginWindow,
 		}
 	},
 	render() {
@@ -49,5 +46,5 @@ export default defineComponent({
 				</a-button>
 			</div>
 		)
-	}
+	},
 })
